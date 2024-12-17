@@ -1,0 +1,48 @@
+import { AccountsStore } from "@interfaces";
+import { useAccountStore } from "@stores";
+
+export const useAccountProvider = () => {
+  const accounts = useAccountStore((state: AccountsStore) => state.accounts);
+
+  const createAccount = useAccountStore(
+    (state: AccountsStore) => state.createAccount
+  );
+  const removeAccount = useAccountStore(
+    (state: AccountsStore) => state.removeAccount
+  );
+  const getAllMovements = useAccountStore(
+    (state: AccountsStore) => state.getAllMovements
+  );
+  const editAccount = useAccountStore(
+    (state: AccountsStore) => state.editAccount
+  );
+
+  const getTotalBalance = useAccountStore(
+    (state: AccountsStore) => state.getTotalBalance
+  );
+
+  const totalBalance = getTotalBalance();
+
+  const getAccount = (accountId: string) => {
+    return accounts.find((account) => account.id === accountId);
+  };
+
+  const addMovement = useAccountStore(
+    (state: AccountsStore) => state.addMovement
+  );
+  const removeMovement = useAccountStore(
+    (state: AccountsStore) => state.removeMovement
+  );
+
+  return {
+    accounts,
+    totalBalance,
+    createAccount,
+    removeAccount,
+    getAllMovements,
+    removeMovement,
+    addMovement,
+    editAccount,
+    getAccount,
+  };
+};
