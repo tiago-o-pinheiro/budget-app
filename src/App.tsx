@@ -8,7 +8,7 @@ export const App = () => {
       <Header />
       <ModalProvider />
       <Routes>
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/*" element={<Dashboard />} />
         <Route path="/accounts/*" element={<Accounts />} />
       </Routes>
     </div>

@@ -1,11 +1,14 @@
-import { useModalProvider } from "@hooks";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const AddAccount = () => {
-  const { setModal, close } = useModalProvider();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const handleNewAccount = () => {
+    navigate("/accounts/new", { state: { from: location } });
+  };
   return (
     <div>
-      <button onClick={() => setModal("ADD_ACCOUNT")}>Add account</button>
-      <button onClick={() => close()}>Close account</button>
+      <button onClick={handleNewAccount}>Add account</button>
     </div>
   );
 };
