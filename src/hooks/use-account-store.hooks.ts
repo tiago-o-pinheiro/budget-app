@@ -23,7 +23,7 @@ export const useAccountProvider = () => {
 
   const totalBalance = getTotalBalance();
 
-  const getAccount = (accountId: string) => {
+  const getAccount = (accountId: number) => {
     return accounts.find((account) => account.id === accountId);
   };
 
@@ -33,6 +33,12 @@ export const useAccountProvider = () => {
   const removeMovement = useAccountStore(
     (state: AccountsStore) => state.removeMovement
   );
+
+  const getAccountArray = (id?: number) => {
+    if (!id) return accounts;
+    const account = getAccount(id);
+    return [account];
+  };
 
   return {
     accounts,
@@ -44,5 +50,6 @@ export const useAccountProvider = () => {
     addMovement,
     editAccount,
     getAccount,
+    getAccountArray,
   };
 };
