@@ -3,8 +3,9 @@ import { useAccountProvider } from "@hooks";
 export const Transactions = () => {
   const { getAllMovements } = useAccountProvider();
   const movements = getAllMovements();
-  console.log(movements);
+
   if (movements.length === 0) return null;
+
   return (
     <div>
       <h2>Transactions</h2>
