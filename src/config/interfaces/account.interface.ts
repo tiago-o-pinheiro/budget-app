@@ -1,7 +1,7 @@
 import { Movement } from "./movement.interface";
 
 export interface Account {
-  id: string;
+  id: number;
   name: string;
   owner?: string;
   balance: number;
