@@ -24,15 +24,15 @@ export const useAccountStore = create<AccountsStore>()(
       createAccount: (account) =>
         set((state) => {
           const lastId = state.accounts.length
-            ? parseInt(state.accounts[state.accounts.length - 1].id)
+            ? state.accounts[state.accounts.length - 1].id
             : 0;
 
-          const newAccount = { ...account, id: (lastId + 1).toString() };
+          const newAccount = { ...account, id: lastId + 1 };
 
           return { accounts: [...state.accounts, newAccount] };
         }),
 
-      removeAccount: (id) =>
+      removeAccount: (id: number) =>
         set((state) => ({
           accounts: state.accounts.filter((account) => account.id !== id),
         })),
@@ -40,6 +40,7 @@ export const useAccountStore = create<AccountsStore>()(
       addMovement: (accountId, movement) =>
         set((state) => ({
           accounts: state.accounts.map((account) => {
+            console.log({ account, accountId });
             if (account.id !== accountId) return account;
 
             const movements = account.movements || [];
