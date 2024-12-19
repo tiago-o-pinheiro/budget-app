@@ -9,5 +9,5 @@ export interface AccountsStore {
   getTotalBalance: () => number;
   editAccount: (id: number, updatedAccount: Partial<Account>) => void;
   addMovement: (accountId: number, movement: Omit<Movement, "id">) => void;
-  removeMovement: (accountId: number, movementId: number) => void;
+  removeMovement: (accountName: string, movementId: number) => void;
 }

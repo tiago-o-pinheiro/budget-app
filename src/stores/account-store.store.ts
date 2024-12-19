@@ -40,7 +40,6 @@ export const useAccountStore = create<AccountsStore>()(
       addMovement: (accountId, movement) =>
         set((state) => ({
           accounts: state.accounts.map((account) => {
-            console.log({ account, accountId });
             if (account.id !== accountId) return account;
 
             const movements = account.movements || [];
@@ -57,10 +56,10 @@ export const useAccountStore = create<AccountsStore>()(
           }),
         })),
 
-      removeMovement: (accountId, movementId) =>
+      removeMovement: (accountName, movementId) =>
         set((state) => ({
           accounts: state.accounts.map((account) => {
-            if (account.id !== accountId) return account;
+            if (account.name !== accountName) return account;
 
             const movements = account.movements || [];
             const movementToRemove = movements.find((m) => m.id === movementId);
