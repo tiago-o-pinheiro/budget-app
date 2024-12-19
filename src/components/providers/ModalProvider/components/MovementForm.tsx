@@ -5,46 +5,65 @@ import {
   useGetCategories,
   useModalProvider,
 } from "@hooks";
-import { Movement } from "@interfaces";
+import { Account, Movement } from "@interfaces";
 import { useForm } from "react-hook-form";
+import { useAmountValidation } from "./utils";
+import { useEffect, useState } from "react";
+import { CurrentBalance } from "./CurrentBalanceCapition";
+import { Select } from "@components";
 
 interface MovementFormProps extends Omit<Movement, "id" | "value"> {
-  accountId: string | null;
-  type: "income" | "expense";
   value: number | null;
-  isRecurrent: boolean;
 }
 
 export const MovementForm = () => {
+  const [isRecurrent, setIsRecurrent] = useState<boolean>(false);
+  const [selectedAccount, setSelectedAccount] = useState<string | null>(null);
   const { isOpen } = useCheckModalStatus("ADD_MOVEMENT");
   const { close, modal } = useModalProvider();
   const { addMovement, getAccountArray } = useAccountProvider();
   const accounts = getAccountArray(modal.id);
   const categories = useGetCategories();
 
+  if (!accounts || accounts.length === 0) return null;
+
   const {
     register,
     handleSubmit,
     reset,
-    watch,
+    getValues,
     formState: { errors },
   } = useForm<MovementFormProps>({
     defaultValues: {
-      accountId: null,
       value: null,
-      type: "expense",
       name: "",
       date: new Date().toISOString().split("T")[0],
-      isRecurrent: false,
       category: "",
       description: "",
       frequency: null,
     },
   });
 
-  if (!isOpen) return null;
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedAccount(e.target.value);
+  };
 
-  const isRecurrent = watch("isRecurrent");
+  useEffect(() => {
+    if (accounts.length) {
+      setSelectedAccount(accounts[0]?.id?.toString() ?? null);
+    }
+  }, [modal.id]);
+
+  const foundAccount = accounts.find(
+    (account) => account?.id === Number(selectedAccount)
+  );
+
+  const isAmountValid = useAmountValidation(
+    foundAccount?.balance ?? 0,
+    getValues("value") ?? 0
+  );
+
+  if (!isOpen) return null;
 
   const handleClose = () => {
     reset();
@@ -52,17 +71,16 @@ export const MovementForm = () => {
   };
 
   const onSubmit = (data: MovementFormProps) => {
-    const { accountId, type, frequency, isRecurrent, ...rest } = data;
-    if (!accountId || !data.value) return;
+    const { value, ...rest } = data;
+
+    if (!selectedAccount || !value) return;
 
     const parsedData = {
       ...rest,
-      frequency: isRecurrent ? frequency : null,
-      value: type === "expense" ? -data.value : data.value,
+      value,
     };
 
-    console.log({ accountId, parsedData });
-    addMovement(+accountId, parsedData);
+    addMovement(parseInt(selectedAccount), parsedData);
     handleClose();
   };
 
@@ -70,32 +88,34 @@ export const MovementForm = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <h2>Add Movement</h2>
 
+      <Select
+        data={accounts.filter(
+          (account): account is Account => account !== undefined
+        )}
+        label="Account"
+        handleChange={handleChange}
+      />
+
       <input
         type="number"
         placeholder="Amount"
-        {...register("value", { required: true, valueAsNumber: true })}
+        step={0.01}
+        {...register("value", {
+          required: "This field is required",
+          valueAsNumber: true,
+        })}
       />
       <br />
-      {errors.value && <span>This field is required</span>}
-      <br />
 
-      <select {...register("accountId")}>
-        {accounts.map((account) => (
-          <option key={account?.id} value={account?.id}>
-            {account?.name}
-          </option>
-        ))}
-      </select>
-      {errors.type && <span>{errors.type.message}</span>}
-      <br />
-      <br />
+      {!errors.value?.message ? (
+        <CurrentBalance
+          balance={foundAccount?.balance ?? 0}
+          isValid={isAmountValid}
+        />
+      ) : (
+        <span>{errors.value?.message}</span>
+      )}
 
-      {/* Type Select */}
-      <select {...register("type")} defaultValue={"expense"}>
-        <option value="income">Income</option>
-        <option value="expense">Expense</option>
-      </select>
-      {errors.type && <span>{errors.type.message}</span>}
       <br />
       <br />
 
@@ -108,7 +128,6 @@ export const MovementForm = () => {
       {errors.name && <span>This field is required</span>}
       <br />
 
-      {/* Type Select */}
       <label>
         <select {...register("category")}>
           {categories.map((category) => (
@@ -124,13 +143,14 @@ export const MovementForm = () => {
       <label>
         <input
           type="checkbox"
-          {...register("isRecurrent")}
-          defaultChecked={false}
+          checked={isRecurrent}
+          onChange={() => setIsRecurrent(!isRecurrent)}
         />
         Is recurrent?
       </label>
       <br />
       <br />
+
       {isRecurrent && (
         <label>
           Recurrency frequency
@@ -157,10 +177,9 @@ export const MovementForm = () => {
         })}
       />
       <br />
-
       {errors.date && <span>This field is required</span>}
-      <br />
 
+      <br />
       <br />
       <textarea
         rows={4}
@@ -168,7 +187,6 @@ export const MovementForm = () => {
         {...register("description")}
       />
       <br />
-
       <br />
 
       <button type="submit">Add</button>
