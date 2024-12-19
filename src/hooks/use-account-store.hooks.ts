@@ -34,6 +34,14 @@ export const useAccountProvider = () => {
     (state: AccountsStore) => state.removeMovement
   );
 
+  const getAccountMovement = (accountId: number) => {
+    const account = getAccount(accountId);
+    return account?.movements?.map((movement) => ({
+      ...movement,
+      account: account.name,
+    }));
+  };
+
   const getAccountArray = (id?: number) => {
     if (!id) return accounts;
     const account = getAccount(id);
@@ -51,5 +59,6 @@ export const useAccountProvider = () => {
     editAccount,
     getAccount,
     getAccountArray,
+    getAccountMovement,
   };
 };
