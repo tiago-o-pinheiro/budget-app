@@ -25,8 +25,6 @@ export const MovementForm = () => {
   const accounts = getAccountArray(modal.id);
   const categories = useGetCategories();
 
-  if (!accounts || accounts.length === 0) return null;
-
   const {
     register,
     handleSubmit,
@@ -63,8 +61,6 @@ export const MovementForm = () => {
     getValues("value") ?? 0
   );
 
-  if (!isOpen) return null;
-
   const handleClose = () => {
     reset();
     close();
@@ -83,6 +79,8 @@ export const MovementForm = () => {
     addMovement(parseInt(selectedAccount), parsedData);
     handleClose();
   };
+
+  if (!accounts || accounts.length === 0 || !isOpen) return null;
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

@@ -1,7 +1,7 @@
-import { AddAccount } from "@components";
+import { AddAccount, ConfirmDialog } from "@components";
 import { useAccountProvider, useModalProvider } from "@hooks";
 import { Account } from "@interfaces";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, Route, Routes, useNavigate, useParams } from "react-router-dom";
 
@@ -30,8 +30,9 @@ const AccountsDashboard = () => {
 interface AccountPageDetailsProps extends Omit<Account, "movements" | "id"> {}
 
 const AccountPageDetails = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const { accountId } = useParams();
-  const { getAccount, editAccount } = useAccountProvider();
+  const { getAccount, editAccount, removeAccount } = useAccountProvider();
   const account = getAccount(Number(accountId));
   const navigate = useNavigate();
   const { register, handleSubmit, setValue } = useForm<AccountPageDetailsProps>(
@@ -50,6 +51,11 @@ const AccountPageDetails = () => {
   const onSubmit = (data: AccountPageDetailsProps) => {
     editAccount(Number(accountId), data);
     navigate("/accounts");
+  };
+
+  const handleRemoveAccount = () => {
+    removeAccount(Number(accountId));
+    navigate("/");
   };
 
   useEffect(() => {
@@ -113,10 +119,21 @@ const AccountPageDetails = () => {
           })}
         />
         <br />
+        <p style={{ color: "red" }} onClick={() => setIsOpen(true)}>
+          Delete account
+        </p>
         <br />
-        <input type="submit" />
+        <button type="submit">Save</button>
         <button onClick={() => navigate("/accounts")}>Cancel</button>
       </form>
+      {isOpen && (
+        <ConfirmDialog
+          cancelAction={() => setIsOpen(false)}
+          confirmAction={handleRemoveAccount}
+          title="Delete account"
+          text="Are you sure you want to delete this account?"
+        />
+      )}
     </div>
   );
 };
