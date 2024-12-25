@@ -7,8 +7,10 @@ interface BalanceProps {
 export const Balance = ({ balance }: BalanceProps) => {
   const formattedBalance = useCurrencyFormatter({ value: balance });
   return (
-    <div>
-      <h6>Balance: {formattedBalance}</h6>
+    <div className="w-full p-4">
+      <p className="font-sans text-4xl text-center font-light py-4">
+        {formattedBalance}
+      </p>
     </div>
   );
 };

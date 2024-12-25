@@ -4,3 +4,7 @@ export { AddMovement } from "./AddMovement/AddMovement";
 export { AddAccount } from "./AddAccount/AddAccount";
 export { Select } from "./Select/Select";
 export { ConfirmDialog } from "./ConfirmDialog/ConfirmDialog";
+export { Modal } from "./Modal/Modal";
+export { Input } from "./Input/Input";
+export { BottomNav } from "./BottomNav/BottomNav";
+export { Title, Text } from "./Typo/Typo";

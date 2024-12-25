@@ -1,3 +1,6 @@
+import { Modal, Text, Button } from "@components";
+import { CheckIcon, TrashIcon } from "@heroicons/react/24/outline";
+
 interface ConfirmDialogProps {
   confirmAction: () => void;
   cancelAction: () => void;
@@ -12,11 +15,16 @@ export const ConfirmDialog = ({
   text,
 }: ConfirmDialogProps) => {
   return (
-    <div>
-      <h2>{title}</h2>
-      <p>{text}</p>
-      <button onClick={confirmAction}>Yes</button>
-      <button onClick={cancelAction}>No</button>
-    </div>
+    <Modal title={title}>
+      <Text value={text} />
+      <div className="flex justify-center gap-4 mt-4">
+        <Button onClick={confirmAction} title={"Yes"} family="danger">
+          <TrashIcon className="size-4 text-rose-500" />
+        </Button>
+        <Button onClick={cancelAction} title={"No"}>
+          <CheckIcon className="size-4 text-black" />
+        </Button>
+      </div>
+    </Modal>
   );
 };
