@@ -8,7 +8,7 @@ import { useFormContext } from "react-hook-form";
 import clsx from "clsx";
 
 interface InputProps {
-  type: "text" | "number" | "password" | "email" | "date";
+  type: "text" | "number" | "password" | "email" | "date" | "checkbox";
   name: string;
   label: string;
   error?: boolean;
@@ -102,7 +102,7 @@ export const Input = ({
           This field is required
         </Description>
       </Field>
-      <div className="w-12 flex justify-center">{children}</div>
+      {children && <div className="w-12 flex justify-center">{children}</div>}
     </Container>
   );
 };

@@ -8,3 +8,6 @@ export { Modal } from "./Modal/Modal";
 export { Input } from "./Input/Input";
 export { BottomNav } from "./BottomNav/BottomNav";
 export { Title, Text } from "./Typo/Typo";
+export { Container } from "./Container/Container";
+export { Avatar } from "./Avatar/Avatar";
+export { Badge } from "./Badge/Badge";

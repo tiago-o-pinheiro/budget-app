@@ -10,7 +10,7 @@ const SIZES = {
   sm: "text-sm",
   md: "text-md",
   lg: "text-lg",
-  xl: "text-xl",
+  xl: "text-3xl",
 };
 
 const COLORS = {
@@ -18,11 +18,13 @@ const COLORS = {
   secondary: "text-gray-400",
   white: "text-white",
   black: "text-black",
+  red: "text-red-500",
+  green: "text-green-500",
 };
 
 type Sizes = "xs" | "sm" | "md" | "lg" | "xl";
 
-type TextColor = "primary" | "secondary" | "white" | "black";
+type TextColor = "primary" | "secondary" | "white" | "black" | "red" | "green";
 
 interface TypoProps {
   type: "text" | "title";

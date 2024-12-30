@@ -9,7 +9,7 @@ import {
 } from "@heroicons/react/20/solid";
 import { useCheckModalStatus, useModalProvider } from "@hooks";
 import { useAccountStore } from "@stores";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface AccountFormsProviderProps<T> {
   defaultValues?: DefaultValues<T>;
@@ -45,7 +45,7 @@ export const AccountForm = ({
   const handleClose = () => {
     reset();
     close();
-    navigate(-1);
+    navigate("/accounts");
   };
 
   if (!isOpen) return null;

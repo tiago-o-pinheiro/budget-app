@@ -1,4 +1,5 @@
 import { useCurrencyFormatter } from "@hooks";
+import { RemainingBalancePerDay, Text } from "@components";
 
 interface BalanceProps {
   balance: number;
@@ -6,11 +7,15 @@ interface BalanceProps {
 
 export const Balance = ({ balance }: BalanceProps) => {
   const formattedBalance = useCurrencyFormatter({ value: balance });
+
   return (
     <div className="w-full p-4">
-      <p className="font-sans text-4xl text-center font-light py-4">
-        {formattedBalance}
-      </p>
+      <Text
+        value={formattedBalance}
+        size="xl"
+        styles="text-center my-2 mb-4 text-5xl font-thin"
+      />
+      <RemainingBalancePerDay balance={balance} />
     </div>
   );
 };

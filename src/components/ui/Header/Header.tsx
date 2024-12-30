@@ -38,7 +38,7 @@ const Profile = () => {
 
 export const Header = () => {
   return (
-    <header className="flex justify-between items-center bg-white shadow-md rounded-b-3xl h-16 mb-2">
+    <header className="flex justify-between items-center bg-white  h-16 mb-2 fixed w-full top-0 left-0 right-0 z-20">
       <div className="flex items-center justify-start p-2 gap-2">
         <Profile />
       </div>

@@ -57,7 +57,7 @@ const NavItem = ({
 
   return (
     <NavLink to={path}>
-      <div className="flex flex-col items-center justify-center rounded-xl shadow-md">
+      <div className="flex flex-col items-center justify-center">
         <div className={containerStyle}>
           <span className={buttonStyle}>{icon}</span>
         </div>
@@ -68,8 +68,8 @@ const NavItem = ({
 
 export const BottomNav = () => {
   return (
-    <div className="absolute bottom-4 left-0 right-0 z-20">
-      <div className="flex justify-center gap-2 p-2 w-auto">
+    <div className="fixed bottom-1 left-0 right-0 z-10 w-auto">
+      <div className="flex justify-center gap-2 p-2 w-fit mx-auto bg-white dark:bg-black shadow-md dark:shadow-lg rounded-xl">
         {NAV_ITEMS.map(({ label, path, icon }) => (
           <NavItem key={label} label={label} path={path} icon={icon} />
         ))}

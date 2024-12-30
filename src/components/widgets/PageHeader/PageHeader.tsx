@@ -19,14 +19,14 @@ export const PageHeader = ({ title, to = "" }: PageHeaderProps) => {
   };
 
   return (
-    <div className="flex justify-start items-center mb-4 border-b border-gray-200 ">
+    <div className="flex justify-start items-center mb-4 border-b border-gray-200 h-14">
       <div className="flex-none w-20">
         <Button title="Back" onClick={goBack} family="nav">
           <ArrowLeftIcon className="size-4 text-black" />
         </Button>
       </div>
       <div className="grow w-full text-center">
-        <Title value={title} size="md" />
+        <Title value={title} size="lg" />
       </div>
       <div className="flex-none w-20"></div>
     </div>

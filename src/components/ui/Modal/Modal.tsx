@@ -11,7 +11,7 @@ interface ModalProps {
 
 const Backdrop = () => {
   return (
-    <div className="absolute inset-0 h-full w-full bg-black bg-opacity-50 z-30 transition duration-200 ease-in data-[closed]:opacity-0"></div>
+    <div className="fixed inset-0 h-full w-full bg-black bg-opacity-50 z-30 transition duration-200 ease-in data-[closed]:opacity-0"></div>
   );
 };
 
@@ -23,7 +23,7 @@ export const Modal = ({ children, title }: ModalProps) => {
   }, []);
 
   return (
-    <div className="flex justify-center inset-0 items-center h-screen fixed z-40">
+    <div className="flex justify-center inset-0 items-center h-screen absolute z-40">
       <Backdrop />
       <Transition show={isShowing}>
         <div

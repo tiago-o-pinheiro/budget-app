@@ -6,7 +6,7 @@ interface AddMovementProps {
   id?: number | null;
 }
 
-export const AddMovement: React.FC<AddMovementProps> = ({ id }) => {
+export const AddMovement: React.FC<AddMovementProps> = ({ id = null }) => {
   const { setModal } = useModalProvider();
 
   const handleModal = () => {
