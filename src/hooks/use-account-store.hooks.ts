@@ -39,6 +39,7 @@ export const useAccountProvider = () => {
     return account?.movements?.map((movement) => ({
       ...movement,
       account: account.name,
+      accountId: account.id,
     }));
   };
 
