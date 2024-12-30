@@ -92,6 +92,7 @@ export const useAccountStore = create<AccountsStore>()(
           (account.movements || []).map((movement) => ({
             ...movement,
             account: account.name,
+            accountId: account.id,
           }))
         );
       },
