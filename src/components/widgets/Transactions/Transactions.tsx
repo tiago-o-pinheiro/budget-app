@@ -1,51 +1,84 @@
-import { useAccountProvider } from "@hooks";
+import { useCurrencyFormatter } from "@hooks";
 import { Movement } from "@interfaces";
-import { useState } from "react";
-import { ConfirmDialog } from "@components";
+import { Container, Text, Title, Avatar, Badge } from "@components";
+import clsx from "clsx";
+import { Link } from "react-router-dom";
 
 interface TransactionItemProps extends Movement {
   account: string;
+  date: string;
+  accountId: number;
 }
+
+const Transaction = ({
+  name,
+  value,
+  account,
+  category,
+  id,
+  date,
+  accountId,
+}: TransactionItemProps) => {
+  const formattedValue = useCurrencyFormatter({ value });
+
+  const formattedDate = new Intl.DateTimeFormat("en-US", {
+    day: "2-digit",
+    month: "short",
+  }).format(new Date(date));
+
+  return (
+    <Container styles="rounded-xl p-2 bg-white mb-4">
+      <Link to={`/movement?accountId=${accountId}&movementId=${id}`}>
+        <div className="flex items-center justify-between">
+          <Avatar value={name} />
+
+          <div className="flex-1 ml-4 flex flex-col">
+            <Title value={name} size="xs" styles="text-base font-thin" />
+            <Text value={account} size="sm" color="secondary" styles="mb-2" />
+            <Badge value={category} />
+          </div>
+
+          <div className="text-right">
+            <Text
+              value={formattedValue}
+              size="md"
+              styles={clsx(
+                "font-bold",
+                value < 0 ? "text-red-500" : "text-green-500"
+              )}
+            />
+            <Text
+              value={formattedDate}
+              size="sm"
+              styles="text-xs text-gray-400 mt-1"
+            />
+          </div>
+        </div>
+      </Link>
+    </Container>
+  );
+};
 
 export const Transactions = ({
   movements,
 }: {
   movements: TransactionItemProps[];
 }) => {
-  const [isOpen, setIsOpen] = useState<number | null>(null);
-  const { removeMovement } = useAccountProvider();
-
-  if (movements?.length === 0 || !movements) {
-    return <h2>No transactions</h2>;
-  }
-
-  const handleDelete = (accountName: string, movementId: number) => {
-    removeMovement(accountName, movementId);
-  };
+  const hasTransactions = movements?.length > 0;
 
   return (
-    <div>
-      <h2>Transactions</h2>
-      <ul>
-        {movements.map((movement, index) => (
-          <li key={`${index}-${movement.id}`}>
-            <p>Name: {movement.name}</p>
-            <p>Amount: {movement.value}</p>
-
-            <button onClick={() => setIsOpen(movement.id)}>Delete</button>
-            {isOpen === movement.id && (
-              <ConfirmDialog
-                title="Delete Transaction"
-                text="Are you sure you want to delete this transaction?"
-                confirmAction={() =>
-                  handleDelete(movement.account, movement.id)
-                }
-                cancelAction={() => setIsOpen(null)}
-              />
-            )}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Container
+      styles="mt-2 pb-2 pt-8 px-4 rounded-t-3xl bg-gray-100/75 flex flex-col overflow-y-auto absolute top-62 left-2 right-2 h-full"
+      clean
+    >
+      <Text value="Transactions" size="lg" styles="font-medium mb-4" />
+      {hasTransactions ? (
+        movements.map((movement, index) => (
+          <Transaction key={`${index}-${movement.id}`} {...movement} />
+        ))
+      ) : (
+        <Text value="No transactions" size="md" styles="text-center" />
+      )}
+    </Container>
   );
 };

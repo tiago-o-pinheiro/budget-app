@@ -1,34 +1,28 @@
 import {
   Description,
   Field,
-  Select as StyledSelect,
+  Input as StyledInput,
   Label,
 } from "@headlessui/react";
-
-import clsx from "clsx";
-import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useFormContext } from "react-hook-form";
+import clsx from "clsx";
+
+interface InputProps {
+  type: "text" | "number" | "password" | "email" | "date" | "checkbox";
+  name: string;
+  label: string;
+  error?: boolean;
+  placeholder?: string;
+
+  isForm?: boolean;
+  isRequired?: boolean;
+  children?: React.ReactNode;
+  props?: any;
+}
 
 interface ContainerProps {
   children: React.ReactNode;
   styles?: string;
-}
-
-type DataInterface = {
-  id: number | string;
-  name: number | string;
-  value?: number | string;
-};
-
-interface SelectProps<T extends DataInterface> {
-  data?: T[];
-  name: string;
-  label: string;
-  handleChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-  children?: React.ReactNode;
-  isRequired?: boolean;
-  error?: boolean;
-  isForm?: boolean;
 }
 
 const containerStyles = (styles: string) => {
@@ -43,11 +37,8 @@ const Container = ({ children, styles }: ContainerProps) => {
   return <div className={defaultStyles}>{children}</div>;
 };
 
-const selectStyles = () => {
-  return clsx(
-    " block w-full appearance-none bg-transparent text-sm text-gray-600",
-    "focus:outline-none"
-  );
+const inputStyles = () => {
+  return clsx("bg-transparent text-sm text-gray-600", "focus:outline-none");
 };
 
 const labelStyles = () => {
@@ -65,16 +56,19 @@ const fieldStyles = () => {
   return clsx("flex flex-col w-full px-2");
 };
 
-export const Select = <T extends DataInterface>({
+export const Input = ({
+  type,
   name,
   label,
+  placeholder,
+  isForm = true,
+  isRequired = false,
   error = false,
   children,
-  data = [],
-  isForm = true,
-  handleChange = () => {},
-}: SelectProps<T>) => {
+  props,
+}: InputProps) => {
   const { register } = useFormContext();
+
   return (
     <Container>
       <Field className={fieldStyles()}>
@@ -82,26 +76,28 @@ export const Select = <T extends DataInterface>({
           {label && label}
         </Label>
 
-        <div className="relative">
-          <StyledSelect
-            className={selectStyles()}
-            {...(isForm ? register(name, { required: true }) : {})}
-            name={name}
-            onChange={(event: React.ChangeEvent<HTMLSelectElement>) =>
-              handleChange(event)
-            }
-          >
-            {data.map((item) => (
-              <option key={item.id} value={item.value ?? item.id}>
-                {item.name}
-              </option>
-            ))}
-          </StyledSelect>
-          <ChevronDownIcon
-            className="group pointer-events-none absolute top-0 right-0 size-4 fill-white/60"
-            aria-hidden="true"
+        {isForm ? (
+          <StyledInput
+            {...register(name, {
+              required: isRequired,
+              valueAsNumber: type === "number",
+            })}
+            className={inputStyles()}
+            placeholder={placeholder}
+            type={type}
+            step={0.01}
+            {...props}
           />
-        </div>
+        ) : (
+          <StyledInput
+            name={name}
+            type={type}
+            placeholder={placeholder}
+            className={inputStyles()}
+            step={0.01}
+            {...props}
+          />
+        )}
         <Description className={descriptionStyles(error)}>
           This field is required
         </Description>

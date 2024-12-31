@@ -1,4 +1,4 @@
-type Frequency = "daily" | "weekly" | "monthly" | "yearly";
+export type Frequency = "daily" | "weekly" | "monthly" | "yearly";
 
 export interface Movement {
   id: number;

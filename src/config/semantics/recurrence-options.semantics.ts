@@ -1,11 +1,12 @@
 interface RecurrencyOptionsProps {
-  label: string;
+  name: string;
   value: string;
+  id: number;
 }
 
 export const RECURRENCY_OPTIONS: RecurrencyOptionsProps[] = [
-  { label: "Daily", value: "daily" },
-  { label: "Weekly", value: "weekly" },
-  { label: "Monthly", value: "monthly" },
-  { label: "Yearly", value: "yearly" },
+  { name: "Daily", value: "daily", id: 1 },
+  { name: "Weekly", value: "weekly", id: 2 },
+  { name: "Monthly", value: "monthly", id: 3 },
+  { name: "Yearly", value: "yearly", id: 4 },
 ];

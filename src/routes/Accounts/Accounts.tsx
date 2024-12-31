@@ -1,139 +1,59 @@
-import { AddAccount, ConfirmDialog } from "@components";
-import { useAccountProvider, useModalProvider } from "@hooks";
+import { Button, PageHeader, Text, Title } from "@components";
+import { PlusIcon } from "@heroicons/react/24/outline";
+import {
+  useAccountProvider,
+  useCurrencyFormatter,
+  useModalProvider,
+} from "@hooks";
 import { Account } from "@interfaces";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { Link, Route, Routes, useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import { EditAccount } from "./components/EditAccount";
 
-const AccountsDashboard = () => {
-  const { accounts } = useAccountProvider();
+const AccountCard = ({ account }: { account: Account }) => {
+  const formattedBalance = useCurrencyFormatter({ value: account.balance });
+  const navigate = useNavigate();
+
+  const goTo = () => {
+    navigate(`/accounts/${account.id}`);
+  };
 
   return (
-    <div>
-      Accounts
-      {accounts.map((account) => (
-        <div key={account.id}>
-          <p>{account.name}</p>
-          <p>{account.balance}</p>
+    <div
+      className="w-full rounded-3xl mb-2 p-2 pl-4 pt-4  bg-gray-100"
+      key={account.id}
+    >
+      <Title value={account.name} size="lg" styles="mb-2" />
 
-          <div>
-            <Link to={`/accounts/${account.id}`}>Details</Link>
-          </div>
-        </div>
-      ))}
-      <AddAccount />
-      <Link to="/">Return</Link>
+      <Text value={formattedBalance} size="md" color="primary" />
+
+      <div className="flex justify-end items-center">
+        <Button title="Details" onClick={goTo} family="secondary" size="sm" />
+      </div>
     </div>
   );
 };
 
-interface AccountPageDetailsProps extends Omit<Account, "movements" | "id"> {}
-
-const AccountPageDetails = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { accountId } = useParams();
-  const { getAccount, editAccount, removeAccount } = useAccountProvider();
-  const account = getAccount(Number(accountId));
+const AccountsDashboard = () => {
+  const { accounts } = useAccountProvider();
   const navigate = useNavigate();
-  const { register, handleSubmit, setValue } = useForm<AccountPageDetailsProps>(
-    {
-      defaultValues: {
-        name: account?.name,
-        owner: account?.owner,
-        balance: account?.balance,
-        description: account?.description,
-        iban: account?.iban,
-        swift: account?.swift,
-      },
-    }
-  );
 
-  const onSubmit = (data: AccountPageDetailsProps) => {
-    editAccount(Number(accountId), data);
-    navigate("/accounts");
+  const addAccount = () => {
+    navigate("/accounts/new");
   };
-
-  const handleRemoveAccount = () => {
-    removeAccount(Number(accountId));
-    navigate("/");
-  };
-
-  useEffect(() => {
-    if (!account) {
-      navigate(-1);
-    }
-
-    setValue("name", account?.name || "");
-    setValue("owner", account?.owner || "");
-    setValue("balance", account?.balance || 0);
-    setValue("description", account?.description || "");
-    setValue("iban", account?.iban || "");
-    setValue("swift", account?.swift || "");
-  }, [account]);
 
   return (
-    <div>
-      <h4>Account Details</h4>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          type="text"
-          placeholder="Account Name"
-          {...register("name", { required: true })}
-        />
-        <br />
-        <br />
-        <input
-          type="text"
-          placeholder="Account owner"
-          {...register("owner", {})}
-        />
-        <br />
-        <br />
-        <input
-          type="number"
-          step={0.01}
-          placeholder="Balance"
-          {...register("balance", { required: true })}
-        />
-        <br />
-        <br />
-        <textarea
-          rows={4}
-          placeholder="Account description"
-          {...register("description", {})}
-        />
-        <br />
-        <br />
-        <input
-          type="text"
-          placeholder="IBAN"
-          {...register("iban", { pattern: /^[A-Z]{2}[0-9]{2}[A-Z0-9]+$/i })}
-        />
-        <br />
-        <br />
-        <input
-          type="text"
-          placeholder="BIC/SWIFT"
-          {...register("swift", {
-            pattern: /^[A-Z]{4}[A-Z]{2}[0-9A-Z]{2}([0-9A-Z]{3})?$/i,
-          })}
-        />
-        <br />
-        <p style={{ color: "red" }} onClick={() => setIsOpen(true)}>
-          Delete account
-        </p>
-        <br />
-        <button type="submit">Save</button>
-        <button onClick={() => navigate("/accounts")}>Cancel</button>
-      </form>
-      {isOpen && (
-        <ConfirmDialog
-          cancelAction={() => setIsOpen(false)}
-          confirmAction={handleRemoveAccount}
-          title="Delete account"
-          text="Are you sure you want to delete this account?"
-        />
-      )}
+    <div className="pt-2">
+      <PageHeader title="Accounts" to="/" />
+      {accounts.map((account) => (
+        <AccountCard account={account} key={account.id} />
+      ))}
+
+      <div className="flex justify-end items-center">
+        <Button title="Add Account" family="primary" onClick={addAccount}>
+          <PlusIcon className="size-4 text-black" />
+        </Button>
+      </div>
     </div>
   );
 };
@@ -151,7 +71,7 @@ export const Accounts = () => {
   return (
     <Routes>
       <Route path="/" element={<AccountsDashboard />} />
-      <Route path="/:accountId" element={<AccountPageDetails />} />
+      <Route path="/:accountId" element={<EditAccount />} />
       <Route path="/new" element={<AddNewAccountPage />} />
     </Routes>
   );

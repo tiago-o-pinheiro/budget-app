@@ -3,3 +3,5 @@ export { useAccountProvider } from "./use-account-store.hooks";
 export { useCheckModalStatus } from "./use-check-modal-status.hooks";
 export { useGetCategories } from "./use-get-categories.hooks";
 export { useCurrencyFormatter } from "./use-currency-formatter.hooks";
+export { useGetColors } from "./use-get-colors-hooks";
+export { useRemainingBalance } from "./use-remaining-balance.hooks";
