@@ -3,37 +3,52 @@ import clsx from "clsx";
 import { useState, useEffect } from "react";
 import { Text } from "@components";
 
-const optionStyles = (isOpen: boolean) => {
+const optionStyles = (isOpen: boolean, styles?: string) => {
   return clsx(
     "bg-white border border-gray-300 absolute z-10 w-full rounded-b-lg shadow-lg overflow-hidden transition-all duration-200 ease-in-out ",
-    isOpen ? "opacity-100" : "opacity-0"
+    isOpen ? "opacity-100" : "hidden opacity-0",
+    styles
   );
 };
 
-const selectedStyles = (isOpen: boolean) => {
+const selectedStyles = (isOpen: boolean, styles?: string) => {
   return clsx(
     "px-4 py-2 cursor-pointer flex justify-between items-center gap-2 w-full border rounded-lg border-gray-300 transition-all duration-200",
-    isOpen ? "border-b-0 rounded-b-none" : ""
+    isOpen ? "border-b-0 rounded-b-none" : "",
+    styles
   );
 };
 
-const containerStyles = (isOpen: boolean) => {
+const containerStyles = (isOpen: boolean, styles?: string) => {
   return clsx(
     "relative w-full transition-shadow duration-200",
-    isOpen ? "shadow-lg" : ""
+    isOpen ? "shadow-lg" : "",
+    styles
   );
 };
 
 type Option<T> = T & { id: number; name: string };
+type Styles = Record<
+  "optionsStyles" | "selectedStyles" | "containerStyles",
+  string
+>;
+
+const STYLES = {
+  optionsStyles: "",
+  selectedStyles: "",
+  containerStyles: "",
+};
 
 export const ListSelect = <T extends Record<string, any>>({
   options,
   onClick,
   defaultValue,
+  styles = STYLES,
 }: {
   options: Option<T>[];
   onClick: (value: number) => void;
   defaultValue?: Option<T>;
+  styles?: Styles;
 }) => {
   const [active, setActive] = useState<Option<T>>(defaultValue ?? options[0]);
   const [isOpen, setIsOpen] = useState(false);
@@ -53,8 +68,11 @@ export const ListSelect = <T extends Record<string, any>>({
   }, [options]);
 
   return (
-    <div className={containerStyles(isOpen)}>
-      <div className={selectedStyles(isOpen)} onClick={handleChange}>
+    <div className={containerStyles(isOpen, styles["containerStyles"])}>
+      <div
+        className={selectedStyles(isOpen, styles["selectedStyles"])}
+        onClick={handleChange}
+      >
         <Text value={active?.name} size="md" styles="flex-1 text-center" />
         {!isOpen ? (
           <ChevronDownIcon className="h-4 w-4 text-black" />
@@ -63,7 +81,7 @@ export const ListSelect = <T extends Record<string, any>>({
         )}
       </div>
 
-      <ul className={optionStyles(isOpen)}>
+      <ul className={optionStyles(isOpen, styles["optionsStyles"])}>
         {options
           .filter((option) => option.id !== active?.id)
           .map((option) => (
