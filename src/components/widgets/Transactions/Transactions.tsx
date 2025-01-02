@@ -59,12 +59,18 @@ const Transaction = ({
   );
 };
 
+const sortMovementsByDate = (a: Movement, b: Movement) => {
+  return new Date(b.date).getTime() - new Date(a.date).getTime();
+};
+
 export const Transactions = ({
   movements,
 }: {
   movements: TransactionItemProps[];
 }) => {
   const hasTransactions = movements?.length > 0;
+
+  const sortedMovements = movements.sort(sortMovementsByDate);
 
   return (
     <Container
@@ -73,7 +79,7 @@ export const Transactions = ({
     >
       <Text value="Transactions" size="lg" styles="font-medium mb-4" />
       {hasTransactions ? (
-        movements.map((movement, index) => (
+        sortedMovements.map((movement, index) => (
           <Transaction key={`${index}-${movement.id}`} {...movement} />
         ))
       ) : (
