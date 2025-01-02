@@ -62,7 +62,7 @@ const DashboardHeader = ({ balance, accountId }: DashboardHeaderProps) => {
   const navigate = useNavigate();
 
   const handleSelectChange = (value: number) => {
-    if (!value) {
+    if (value === 999) {
       navigate(`/`);
     } else {
       navigate(`/${value}`);
