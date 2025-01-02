@@ -17,6 +17,8 @@ export const AccountSelectorComponent = ({
     name: account.name,
   }));
 
+  accountList.push({ id: 999, name: "All accounts" });
+
   const handleChange = (value: number) => {
     handleSelectChange(value);
   };
@@ -25,7 +27,7 @@ export const AccountSelectorComponent = ({
     <div className="w-full max-w-64 px-4 mx-auto">
       <Field>
         <div className="relative">
-          <ListSelect onClick={handleChange} options={accountList} />
+          <ListSelect onClick={handleChange} options={accountList.reverse()} />
         </div>
       </Field>
     </div>
