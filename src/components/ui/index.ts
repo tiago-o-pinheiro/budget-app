@@ -11,3 +11,6 @@ export { Title, Text } from "./Typo/Typo";
 export { Container } from "./Container/Container";
 export { Avatar } from "./Avatar/Avatar";
 export { Badge } from "./Badge/Badge";
+export { ListSelect } from "./ListSelect/ListSelect";
+export { CurrencyNumber } from "./CurrencyNumber/CurrencyNumber";
+export { PadNumber } from "./PadNumber/PadNumber";

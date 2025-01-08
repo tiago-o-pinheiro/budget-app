@@ -9,6 +9,7 @@ import { useAccountProvider } from "@hooks";
 import { Movement } from "@interfaces";
 import { useEffect } from "react";
 import {
+  Link,
   Route,
   Routes,
   useLocation,
@@ -21,6 +22,7 @@ import {
   ChartBarSquareIcon,
 } from "@heroicons/react/24/outline";
 import { MovementDetails } from "./components/MovementDetails";
+import { Exchange } from "./components/Exchange";
 
 interface TransactionItemProps extends Movement {
   account: string;
@@ -37,9 +39,11 @@ const DashboardActions = ({ accountId }: DashboardContentProps) => {
         <AddMovement id={accountId} />
       </div>
       <div className="flex flex-col items-center">
-        <Button title="Exchange">
-          <ArrowsRightLeftIcon className="size-4 text-black" />
-        </Button>
+        <Link to="/exchange">
+          <Button title="Exchange">
+            <ArrowsRightLeftIcon className="size-4 text-black" />
+          </Button>
+        </Link>
       </div>
       <div className="flex flex-col items-center">
         <Button title="Reports">
@@ -57,17 +61,16 @@ interface DashboardHeaderProps {
 const DashboardHeader = ({ balance, accountId }: DashboardHeaderProps) => {
   const navigate = useNavigate();
 
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedId = event.target.value;
-    if (!selectedId || selectedId === "all") {
+  const handleSelectChange = (value: number) => {
+    if (value === 999) {
       navigate(`/`);
     } else {
-      navigate(`/${selectedId}`);
+      navigate(`/${value}`);
     }
   };
 
   return (
-    <div className="bg-white p-4 mt-8">
+    <div className="bg-white p-4 mt-14">
       <Header />
       <AccountSelectorComponent handleSelectChange={handleSelectChange} />
       <Balance balance={balance} />
@@ -123,6 +126,7 @@ export const Dashboard = () => {
       <Routes>
         <Route path="/:accountId?" element={<DashboardContent />} />
         <Route path="/movement/*" element={<MovementDetails />} />
+        <Route path="/exchange" element={<Exchange />} />
       </Routes>
     </>
   );

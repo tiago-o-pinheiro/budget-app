@@ -1,14 +1,11 @@
 import { useCurrencyFormatter } from "@hooks";
-import { Movement } from "@interfaces";
-import { Container, Text, Title, Avatar, Badge } from "@components";
+import { Container, Text, Title, Avatar, Badge, ListSelect } from "@components";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
-
-interface TransactionItemProps extends Movement {
-  account: string;
-  date: string;
-  accountId: number;
-}
+import { useState } from "react";
+import { MONTH_LIST } from "src/config/semantics/month-list.semantics";
+import { TransactionItemProps } from "./transaction.interface";
+import { filterMovementsBySelectedMonth, sortMovementsByDate } from "./utils";
 
 const Transaction = ({
   name,
@@ -64,16 +61,34 @@ export const Transactions = ({
 }: {
   movements: TransactionItemProps[];
 }) => {
+  const thisMonth = new Date().getMonth() + 1;
+  const [selectedMonth, setSelectedMonth] = useState(thisMonth);
   const hasTransactions = movements?.length > 0;
+
+  const filteredMovements = filterMovementsBySelectedMonth(
+    movements,
+    selectedMonth
+  )?.sort(sortMovementsByDate);
 
   return (
     <Container
       styles="mt-2 pb-2 pt-8 px-4 rounded-t-3xl bg-gray-100/75 flex flex-col overflow-y-auto absolute top-62 left-2 right-2 h-full"
       clean
     >
-      <Text value="Transactions" size="lg" styles="font-medium mb-4" />
+      <div className="flex justify-between items-center mb-4">
+        <Text value="Transactions" size="lg" styles="font-medium w-8/12" />
+        <ListSelect
+          options={MONTH_LIST}
+          onClick={setSelectedMonth}
+          styles={{
+            containerStyles: "w-4/12",
+            optionsStyles: "",
+            selectedStyles: "",
+          }}
+        />
+      </div>
       {hasTransactions ? (
-        movements.map((movement, index) => (
+        filteredMovements.map((movement, index) => (
           <Transaction key={`${index}-${movement.id}`} {...movement} />
         ))
       ) : (

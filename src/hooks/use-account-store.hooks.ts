@@ -49,9 +49,34 @@ export const useAccountProvider = () => {
     return [account];
   };
 
+  const transferMoney = (from: number, to: number, value: number) => {
+    const fromAccount = getAccount(from);
+    const toAccount = getAccount(to);
+    const today = new Date().toISOString();
+
+    if (fromAccount && toAccount) {
+      addMovement(from, {
+        value: -value,
+        name: `Transfer between accounts`,
+        date: today,
+        description: `Transfer to ${toAccount.name}`,
+        category: "Transfer",
+      });
+
+      addMovement(to, {
+        value,
+        name: `Transfer between accounts`,
+        date: today,
+        description: `Transfer from ${fromAccount.name}`,
+        category: "Transfer",
+      });
+    }
+  };
+
   return {
     accounts,
     totalBalance,
+    transferMoney,
     createAccount,
     removeAccount,
     getAllMovements,
