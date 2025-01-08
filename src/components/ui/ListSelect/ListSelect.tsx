@@ -61,6 +61,12 @@ export const ListSelect = <T extends Record<string, any>>({
   };
 
   useEffect(() => {
+    if (defaultValue) {
+      setActive(defaultValue);
+    }
+  }, []);
+
+  useEffect(() => {
     if (!showOptionsList) {
       setActive(options[0]);
       onClick(options[0].id);
