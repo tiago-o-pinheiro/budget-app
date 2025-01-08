@@ -20,7 +20,7 @@ const AvailableBalance = ({ balance }: { balance: number }) => {
 
 export const Exchange = () => {
   const { accounts, transferMoney } = useAccountProvider();
-  const [amount, setAmount] = useState<number | null>(null);
+  const [amount, setAmount] = useState<string | null>(null);
   const [fromAccount, setFromAccount] = useState<number | null>(null);
   const [toAccount, setToAccount] = useState<number | null>(null);
   const navigate = useNavigate();
@@ -64,6 +64,12 @@ export const Exchange = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (accountDestinationOptions.length > 1) {
+      setToAccount(accountDestinationOptions[0].id);
+    }
+  }, []);
+
   const fromAccountBalance = accounts.find(
     (account) => account.id === fromAccount
   );
@@ -84,13 +90,18 @@ export const Exchange = () => {
       </div>
       <div className="mx-auto flex justify-between items-center gap-2 mb-4">
         <div className="flex justify-center items-center w-full">
-          <ListSelect onClick={handleFromAccountChange} options={accounts} />
+          <ListSelect
+            onClick={handleFromAccountChange}
+            options={accounts}
+            defaultValue={accounts[0]}
+          />
         </div>
         <ArrowPathRoundedSquareIcon className="h-12 w-12 text-black" />
         <div className="flex justify-center items-center w-full">
           <ListSelect
             onClick={handleToAccountChange}
             options={accountDestinationOptions}
+            defaultValue={accountDestinationOptions[0]}
           />
         </div>
       </div>
