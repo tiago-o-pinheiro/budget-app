@@ -3,7 +3,7 @@ import { Container, Text, Title, Avatar, Badge, ListSelect } from "@components";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { MONTH_LIST } from "src/config/semantics/month-list.semantics";
+import { MONTH_LIST } from "@constants";
 import { TransactionItemProps } from "./transaction.interface";
 import { filterMovementsBySelectedMonth, sortMovementsByDate } from "./utils";
 

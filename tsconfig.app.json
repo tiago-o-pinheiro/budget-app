@@ -26,6 +26,7 @@
       "@assets": ["src/assets"],
       "@components": ["src/components"],
       "@config": ["src/config"],
+      "@constants": ["src/config/constants"],
       "@interfaces": ["src/config/interfaces"],
       "@hooks": ["src/hooks"],
       "@routes": ["src/routes"],
