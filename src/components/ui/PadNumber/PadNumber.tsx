@@ -13,9 +13,11 @@ import { PadButtons } from "./components/PadButtons";
 export const PadNumber = ({
   callbackNumber,
   confirmAction,
+  showTotal = false,
 }: {
-  callbackNumber?: (value: number) => void;
+  callbackNumber?: (value: string) => void;
   confirmAction?: (number: number) => void;
+  showTotal?: boolean;
 }) => {
   const {
     handleButtonClick,
@@ -23,10 +25,14 @@ export const PadNumber = ({
     handleClear,
     changeValue,
     handleOperation,
+    input,
   } = usePadNumber(callbackNumber, confirmAction);
 
   return (
     <div className="flex flex-col w-full h-full">
+      <div className="w-full p-2 bg-white text-center text-6xl font-thin">
+        {showTotal ? `${input}€` : ""}
+      </div>
       <div className="grid grid-cols-4 gap-2 p-2 h-3/4">
         <PadButtons label="1" onClick={() => handleButtonClick("1")} />
         <PadButtons label="2" onClick={() => handleButtonClick("2")} />
