@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 
 export const usePadNumber = (
-  callbackNumber?: (value: number) => void,
+  callbackNumber?: (value: string) => void,
   confirmAction?: (number: number) => void
 ) => {
   const [input, setInput] = useState<string>("0");
 
   useEffect(() => {
     if (callbackNumber) {
-      callbackNumber(parseFloat(input.replace(",", ".")));
+      callbackNumber(input.replace(",", "."));
     }
   }, [input, callbackNumber]);
 
