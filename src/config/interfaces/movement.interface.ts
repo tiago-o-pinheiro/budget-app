@@ -6,6 +6,6 @@ export interface Movement {
   description?: string;
   value: number;
   date: string;
-  frequency?: Frequency | null;
+  frequency?: Frequency | null | undefined;
   category: string;
 }

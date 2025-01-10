@@ -15,7 +15,7 @@ const SIZES = {
 
 const COLORS = {
   primary: "text-dark",
-  secondary: "text-gray-400",
+  secondary: "text-gray-500",
   white: "text-white",
   black: "text-black",
   red: "text-red-500",

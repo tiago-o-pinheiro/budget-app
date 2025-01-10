@@ -57,18 +57,18 @@ export const useAccountProvider = () => {
     if (fromAccount && toAccount) {
       addMovement(from, {
         value: -value,
-        name: `Transfer between accounts`,
+        name: `Internal transfer`,
         date: today,
         description: `Transfer to ${toAccount.name}`,
-        category: "Transfer",
+        category: "Transfer between accounts",
       });
 
       addMovement(to, {
         value,
-        name: `Transfer between accounts`,
+        name: `Internal transfer`,
         date: today,
         description: `Transfer from ${fromAccount.name}`,
-        category: "Transfer",
+        category: "Transfer between accounts",
       });
     }
   };

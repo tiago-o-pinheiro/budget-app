@@ -36,7 +36,9 @@ export enum MovementCategory {
   // Incomes
   INCOME_SALARY = "Income: Salary",
   INCOME_BONUS = "Income: Bonuses",
-  TRANSFERS = "Transfer",
+  INCOME_RENT = "Income: Rent",
+  TRANSFERS = "Transfers",
+  TRANSFERS_BETWEEN_ACCOUNTS = "Transfer between accounts",
 
   INCOME_INVESTMENTS_DIVIDENDS = "Income: Dividends",
   INCOME_INVESTMENTS_CAPITAL_GAINS = "Income: Capital Gains",
