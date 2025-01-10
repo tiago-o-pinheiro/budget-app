@@ -46,9 +46,11 @@ const DashboardActions = ({ accountId }: DashboardContentProps) => {
         </Link>
       </div>
       <div className="flex flex-col items-center">
-        <Button title="Reports">
-          <ChartBarSquareIcon className="size-4 text-black" />
-        </Button>
+        <Link to="/reports">
+          <Button title="Reports">
+            <ChartBarSquareIcon className="size-4 text-black" />
+          </Button>
+        </Link>
       </div>
     </div>
   );
