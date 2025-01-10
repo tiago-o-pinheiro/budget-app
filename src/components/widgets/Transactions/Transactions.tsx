@@ -72,7 +72,7 @@ export const Transactions = ({
 
   return (
     <Container
-      styles="mt-2 pb-2 pt-8 px-4 rounded-t-3xl bg-gray-100/75 flex flex-col overflow-y-auto absolute top-62 left-2 right-2 h-full"
+      styles="mt-2 pb-2 pt-8 px-4 rounded-t-3xl bg-gray-100/50 flex flex-col overflow-y-auto absolute top-62 left-2 right-2 h-full"
       clean
     >
       <div className="flex justify-between items-center mb-4">
