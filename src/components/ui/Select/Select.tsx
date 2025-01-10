@@ -8,11 +8,7 @@ import {
 import clsx from "clsx";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useFormContext } from "react-hook-form";
-
-interface ContainerProps {
-  children: React.ReactNode;
-  styles?: string;
-}
+import { Container } from "@components";
 
 type DataInterface = {
   id: number | string;
@@ -31,16 +27,11 @@ interface SelectProps<T extends DataInterface> {
   isForm?: boolean;
 }
 
-const containerStyles = (styles: string) => {
+const containerStyles = (styles?: string) => {
   return clsx(
     "p-3 bg-gray-300/50 flex flex-row-reverse rounded-3xl justify-center items-center mb-2",
     `${styles}`
   );
-};
-
-const Container = ({ children, styles }: ContainerProps) => {
-  const defaultStyles = containerStyles(styles || "");
-  return <div className={defaultStyles}>{children}</div>;
 };
 
 const selectStyles = () => {
@@ -76,7 +67,7 @@ export const Select = <T extends DataInterface>({
 }: SelectProps<T>) => {
   const { register } = useFormContext();
   return (
-    <Container>
+    <Container styles={containerStyles()} clean>
       <Field className={fieldStyles()}>
         <Label className={labelStyles()} htmlFor={name}>
           {label && label}
