@@ -27,12 +27,14 @@ const Transaction = ({
     <Container styles="rounded-xl p-2 bg-white mb-4">
       <Link to={`/movement?accountId=${accountId}&movementId=${id}`}>
         <div className="flex items-center justify-between">
-          <Avatar value={name} />
+          <div className="w-12 h-12">
+            <Avatar value={name} />
+          </div>
 
           <div className="flex-1 ml-4 flex flex-col">
             <Title value={name} size="xs" styles="text-base font-thin" />
             <Text value={account} size="sm" color="secondary" styles="mb-2" />
-            <Badge value={category} />
+            <Badge value={category} size="xs" />
           </div>
 
           <div className="text-right">
@@ -72,7 +74,7 @@ export const Transactions = ({
 
   return (
     <Container
-      styles="mt-2 pb-2 pt-8 px-4 rounded-t-3xl bg-gray-100/50 flex flex-col overflow-y-auto absolute top-62 left-2 right-2 h-full"
+      styles="mt-2 pb-2 pt-8 px-4 rounded-t-3xl bg-gray-100/50 flex flex-col  h-full"
       clean
     >
       <div className="flex justify-between items-center mb-4">
