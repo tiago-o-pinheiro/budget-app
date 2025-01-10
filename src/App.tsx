@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { BottomNav, ModalProvider } from "@components";
-import { Accounts, Dashboard } from "@routes";
+import { Accounts, Dashboard, Reports } from "@routes";
 import { useThemeEffect } from "./hooks/use-theme.hooks";
 
 import clsx from "clsx";
@@ -18,6 +18,7 @@ export const App = () => {
         <Routes>
           <Route path="/*" element={<Dashboard />} />
           <Route path="/accounts/*" element={<Accounts />} />
+          <Route path="/reports/*" element={<Reports />} />
         </Routes>
       </Container>
       <BottomNav />
