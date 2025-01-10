@@ -5,7 +5,9 @@ import { Text } from "@components";
 
 const optionStyles = (isOpen: boolean, styles?: string) => {
   return clsx(
-    "bg-white border border-gray-300 absolute z-10 w-full rounded-b-lg shadow-lg overflow-hidden transition-all duration-200 ease-in-out ",
+    "absolute z-40 w-full shadow-lg overflow-hidden transition-all duration-200 ease-in-out ",
+    "rounded-b-3xl",
+    "bg-gray-200",
     isOpen ? "opacity-100" : "hidden opacity-0",
     styles
   );
@@ -13,7 +15,11 @@ const optionStyles = (isOpen: boolean, styles?: string) => {
 
 const selectedStyles = (isOpen: boolean, styles?: string) => {
   return clsx(
-    "px-4 py-2 cursor-pointer flex justify-between items-center gap-2 w-full border rounded-lg border-gray-300 transition-all duration-200",
+    "cursor-pointer transition-all duration-200",
+    "flex justify-between items-center gap-2",
+    "border rounded-3xl border-gray-200",
+    "bg-gray-200",
+    "px-4 py-2 ",
     isOpen ? "border-b-0 rounded-b-none" : "",
     styles
   );
@@ -21,9 +27,18 @@ const selectedStyles = (isOpen: boolean, styles?: string) => {
 
 const containerStyles = (isOpen: boolean, styles?: string) => {
   return clsx(
-    "relative w-full transition-shadow duration-200",
-    isOpen ? "shadow-lg" : "",
+    "relative transition-shadow duration-200 ease-in-out w-full h-full",
+    "rounded-t-3xl",
+    isOpen ? "shadow-lg bg-gray-200" : "",
     styles
+  );
+};
+
+const listSyles = () => {
+  return clsx(
+    "cursor-pointer min-h-10",
+    "px-4 py-2",
+    "hover:bg-blue-100 active:bg-blue-200 focus:outline-none focus-visible:bg-blue-100"
   );
 };
 
@@ -98,7 +113,7 @@ export const ListSelect = <T extends Record<string, any>>({
                 onClick(option.id);
                 setIsOpen(false);
               }}
-              className="px-4 py-2 cursor-pointer min-h-10 hover:bg-blue-100 active:bg-blue-200 focus:outline-none focus-visible:bg-blue-100"
+              className={listSyles()}
             >
               <Text value={option.name} size="md" />
             </li>
