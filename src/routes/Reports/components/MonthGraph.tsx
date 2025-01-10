@@ -10,7 +10,6 @@ export const MonthGraph = ({
   month?: number;
 }) => {
   const { totalByDay } = useTotalByDayReport(movements, month ?? undefined);
-  console.log(totalByDay);
 
   const getBarHeight = (value: number) => {
     const max = Math.max(...totalByDay.map((day) => day.total));

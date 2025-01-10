@@ -31,8 +31,6 @@ export const Reports = () => {
 
   const hasMovements = spentSummary.some((item) => item.amount > 0);
 
-  console.log(spentSummary);
-
   return (
     <Container styles="pt-2 h-screen" clean>
       <PageHeader title="Reports" to="/" />
