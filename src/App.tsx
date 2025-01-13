@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { BottomNav, Container, ModalProvider } from "@components";
-import { Accounts, Dashboard, Insights, Reports } from "@routes";
+import { Accounts, Dashboard, Reports } from "@routes";
 import { useThemeEffect } from "./hooks/use-theme.hooks";
 
 export const App = () => {
@@ -13,7 +13,6 @@ export const App = () => {
           <Route path="/*" element={<Dashboard />} />
           <Route path="/accounts/*" element={<Accounts />} />
           <Route path="/reports/*" element={<Reports />} />
-          <Route path="/insights/*" element={<Insights />} />
         </Routes>
       </Container>
       <BottomNav />
