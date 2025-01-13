@@ -32,7 +32,7 @@ export const Reports = () => {
   const hasMovements = spentSummary.some((item) => item.amount > 0);
 
   return (
-    <Container styles="pt-2 h-screen" clean>
+    <Container styles="h-screen">
       <PageHeader title="Reports" to="/" />
       <div className="flex justify-between items-center mb-4 gap-4">
         <SwitchButton

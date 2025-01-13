@@ -20,6 +20,7 @@ import { AccountSelectorComponent } from "./components/AccountSelectorComponent"
 import {
   ArrowsRightLeftIcon,
   ChartBarSquareIcon,
+  SparklesIcon,
 } from "@heroicons/react/24/outline";
 import { MovementDetails } from "./components/MovementDetails";
 import { Exchange } from "./components/Exchange";
@@ -52,6 +53,13 @@ const DashboardActions = ({ accountId }: DashboardContentProps) => {
           </Button>
         </Link>
       </div>
+      {/* <div className="flex flex-col items-center">
+        <Link to="/insights">
+          <Button title="Insights">
+            <SparklesIcon className="size-4 text-black" />
+          </Button>
+        </Link>
+      </div> */}
     </div>
   );
 };

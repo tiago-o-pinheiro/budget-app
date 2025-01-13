@@ -28,7 +28,7 @@ export const MonthGraph = ({
           {totalByDay.map((day) => {
             return (
               <div key={day.day} className="flex flex-col items-center">
-                <Text value={`${day.total}€`} size="xs" />
+                <Text value={`${day.total.toFixed(2)}€`} size="xs" />
                 <div
                   className="bg-indigo-500 w-5 rounded-full transition-all duration-300 hover:bg-indigo-700 cursor-pointer mb-1"
                   style={{ height: getBarHeight(day.total) }}

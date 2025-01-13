@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import { Button, Title } from "@components";
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { Title } from "@components";
+import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 
 interface PageHeaderProps {
   title: string;
   to?: string;
 }
 
-export const PageHeader = ({ title, to = "" }: PageHeaderProps) => {
+export const PageHeader = ({ title, to = "/" }: PageHeaderProps) => {
   const navigate = useNavigate();
 
   const goBack = () => {
@@ -19,16 +19,15 @@ export const PageHeader = ({ title, to = "" }: PageHeaderProps) => {
   };
 
   return (
-    <div className="flex justify-start items-center mb-4 border-b border-gray-200 h-14">
-      <div className="flex-none w-20">
-        <Button title="Back" onClick={goBack} family="nav">
-          <ArrowLeftIcon className="size-4 text-black" />
-        </Button>
+    <div className="flex justify-start items-center mb-4 h-14">
+      <div className="flex-none pr-4">
+        <div title="Back" onClick={goBack}>
+          <ChevronLeftIcon className="size-5 text-black" />
+        </div>
       </div>
-      <div className="grow w-full text-center">
-        <Title value={title} size="lg" />
+      <div className="grow w-full text-left">
+        <Title value={title} size="md" color="secondary" />
       </div>
-      <div className="flex-none w-20"></div>
     </div>
   );
 };

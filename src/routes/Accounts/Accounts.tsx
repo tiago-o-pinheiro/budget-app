@@ -1,4 +1,4 @@
-import { Button, PageHeader, Text, Title } from "@components";
+import { Button, Container, PageHeader, Text, Title } from "@components";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import {
   useAccountProvider,
@@ -43,7 +43,7 @@ const AccountsDashboard = () => {
   };
 
   return (
-    <div className="pt-2">
+    <Container clean={false}>
       <PageHeader title="Accounts" to="/" />
       {accounts.map((account) => (
         <AccountCard account={account} key={account.id} />
@@ -54,7 +54,7 @@ const AccountsDashboard = () => {
           <PlusIcon className="size-4 text-black" />
         </Button>
       </div>
-    </div>
+    </Container>
   );
 };
 

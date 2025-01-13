@@ -7,7 +7,7 @@ interface ContainerProps {
 }
 
 const containerStyles = (styles?: string, clean?: boolean) => {
-  return clsx(!clean ? "p-3 mb-2 px-5" : "", `${styles}`);
+  return clsx(!clean ? "py-1 px-2" : "", `${styles}`);
 };
 
 export const Container = ({ children, styles, clean }: ContainerProps) => {

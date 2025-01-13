@@ -1,5 +1,11 @@
 import { useForm, FormProvider } from "react-hook-form";
-import { Button, ConfirmDialog, Input, PageHeader } from "@components";
+import {
+  Button,
+  ConfirmDialog,
+  Container,
+  Input,
+  PageHeader,
+} from "@components";
 import {
   CurrencyEuroIcon,
   PencilSquareIcon,
@@ -57,7 +63,7 @@ export const EditAccount = () => {
 
   return (
     <FormProvider {...methods}>
-      <div>
+      <Container>
         <PageHeader title={account?.name ?? "Account"} to="/accounts" />
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <Input
@@ -117,7 +123,7 @@ export const EditAccount = () => {
             text="Are you sure you want to delete this account?"
           />
         )}
-      </div>
+      </Container>
     </FormProvider>
   );
 };
