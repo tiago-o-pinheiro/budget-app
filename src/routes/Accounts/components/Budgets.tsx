@@ -57,7 +57,6 @@ const AddBudget = ({
   const categories = useGetCategories();
 
   const budgetExists = budgetId ? getBudget(accountId, budgetId) : null;
-  console.log(budgetExists);
 
   const methods = useForm<BudgetFormProps>({
     defaultValues: budgetExists ?? defaultValueBudget,
