@@ -8,7 +8,7 @@ import {
   Text,
   Title,
 } from "@components";
-import { ArrowLeftIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { ChevronLeftIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useAccountProvider, useCurrencyFormatter } from "@hooks";
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -71,10 +71,10 @@ export const MovementDetails = () => {
   const date = formatDate(movement.date);
 
   return (
-    <div>
+    <Container>
       <div className="flex flex-col justify-start items-center gap-4 mb-8 bg-gray-100 absolute top-0 left-0 right-0 p-4">
         <div className="self-start gap-4" onClick={() => navigate(-1)}>
-          <ArrowLeftIcon className="w-6 h-6 text-black" />
+          <ChevronLeftIcon className="size-5 text-black" />
         </div>
         <Avatar value={movement.name} />
         <Title value={movement.name} size="lg" styles="" />
@@ -138,6 +138,6 @@ export const MovementDetails = () => {
           confirmAction={handleDelete}
         />
       )}
-    </div>
+    </Container>
   );
 };

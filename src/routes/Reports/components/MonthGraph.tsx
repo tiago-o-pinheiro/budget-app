@@ -21,16 +21,20 @@ export const MonthGraph = ({
   }
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full gap-4 mt-4">
+    <div className="flex flex-col items-center justify-center w-full h-full gap-2 mt-2">
       <Title value="Total spend by day/month" size="md" />
-      <div className="h-48 flex flex-col items-end justify-end w-full h-full">
+      <div className="h-44 flex flex-col items-end justify-end w-full h-full overflow-x-auto">
         <div className="flex gap-1 w-full items-end justify-between px-3">
           {totalByDay.map((day) => {
             return (
               <div key={day.day} className="flex flex-col items-center">
-                <Text value={`${day.total.toFixed(2)}€`} size="xs" />
+                <Text
+                  value={`${day.total.toFixed(2)}€`}
+                  size="xs"
+                  styles="text-xs/[8px]"
+                />
                 <div
-                  className="bg-indigo-500 w-5 rounded-full transition-all duration-300 hover:bg-indigo-700 cursor-pointer mb-1"
+                  className="bg-indigo-500 w-3 rounded-full transition-all duration-300 hover:bg-indigo-700 cursor-pointer mb-1"
                   style={{ height: getBarHeight(day.total) }}
                 ></div>
                 <Title value={`${day.day}`} size="xs" color="secondary" />
