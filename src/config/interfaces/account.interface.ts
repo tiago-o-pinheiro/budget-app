@@ -1,3 +1,4 @@
+import { Budget } from "./budget.interface";
 import { Movement } from "./movement.interface";
 
 export interface Account {
@@ -9,4 +10,5 @@ export interface Account {
   iban?: string;
   swift?: string;
   movements?: Movement[];
+  budgets?: Budget[];
 }
