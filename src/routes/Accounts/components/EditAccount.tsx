@@ -1,11 +1,5 @@
 import { useForm, FormProvider } from "react-hook-form";
-import {
-  Button,
-  ConfirmDialog,
-  Container,
-  Input,
-  PageHeader,
-} from "@components";
+import { Button, ConfirmDialog, Container, Input } from "@components";
 import {
   CurrencyEuroIcon,
   PencilSquareIcon,
@@ -47,7 +41,6 @@ export const EditAccount = () => {
 
   const onSubmit = (data: Omit<Account, "movements" | "id">) => {
     editAccount(Number(accountId), data);
-    navigate("/accounts");
   };
 
   const handleRemoveAccount = () => {
@@ -64,7 +57,6 @@ export const EditAccount = () => {
   return (
     <FormProvider {...methods}>
       <Container>
-        <PageHeader title={account?.name ?? "Account"} to="/accounts" />
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <Input
             type="text"

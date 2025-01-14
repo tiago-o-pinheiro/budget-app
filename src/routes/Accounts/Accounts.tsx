@@ -1,4 +1,11 @@
-import { Button, Container, PageHeader, Text, Title } from "@components";
+import {
+  Button,
+  Container,
+  PageHeader,
+  Text,
+  Title,
+  Transactions,
+} from "@components";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import {
   useAccountProvider,
@@ -9,6 +16,8 @@ import { Account } from "@interfaces";
 import { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { EditAccount } from "./components/EditAccount";
+import { AccountDetails } from "./components/AccountDetails";
+import { Budgets } from "./components/Budgets";
 
 const AccountCard = ({ account }: { account: Account }) => {
   const formattedBalance = useCurrencyFormatter({ value: account.balance });
@@ -71,7 +80,11 @@ export const Accounts = () => {
   return (
     <Routes>
       <Route path="/" element={<AccountsDashboard />} />
-      <Route path="/:accountId" element={<EditAccount />} />
+      <Route path="/:accountId" element={<AccountDetails />}>
+        <Route path="details" element={<EditAccount />} />
+        <Route path="transactions" element={<Transactions movements={[]} />} />
+        <Route path="budgets" element={<Budgets />} />
+      </Route>
       <Route path="/new" element={<AddNewAccountPage />} />
     </Routes>
   );
