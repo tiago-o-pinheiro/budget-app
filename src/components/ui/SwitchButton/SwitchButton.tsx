@@ -48,6 +48,7 @@ export const SwitchButton = ({ handleClick, values }: SwitchButtonProps) => {
       {values.map((value) => (
         <button
           key={value}
+          type="button"
           className={clsx(
             btnStyles(),
             active === value ? "text-white" : "text-black"
