@@ -1,4 +1,10 @@
-import { CurrencyNumber, ListSelect, PageHeader, Title } from "@components";
+import {
+  Container,
+  CurrencyNumber,
+  ListSelect,
+  PageHeader,
+  Title,
+} from "@components";
 import { ArrowPathRoundedSquareIcon } from "@heroicons/react/24/outline";
 import { useAccountProvider, useCurrencyFormatter } from "@hooks";
 
@@ -75,7 +81,7 @@ export const Exchange = () => {
   );
 
   return (
-    <div className="max-w-3xl mx-auto h-screen">
+    <Container styles="max-w-3xl mx-auto h-screen">
       <PageHeader title="Exchange" />
       <Title
         value="Transfer money between accounts"
@@ -109,6 +115,6 @@ export const Exchange = () => {
       <div className="h-3/5">
         <PadNumber confirmAction={handleMovement} callbackNumber={setAmount} />
       </div>
-    </div>
+    </Container>
   );
 };
