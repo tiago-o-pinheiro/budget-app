@@ -110,7 +110,6 @@ export const useAccountStore = create<AccountsStore>()(
       addBudget: (accountId: number, budget: Omit<Budget, "id">) => {
         set((state) => ({
           accounts: state.accounts.map((account) => {
-            console.log({ accountId });
             if (account.id !== accountId) return account;
 
             const budgets = account.budgets || [];
