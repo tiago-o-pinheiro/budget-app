@@ -1,38 +1,53 @@
 import clsx from "clsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Text } from "@components";
+import {
+  activeOptionStyles,
+  booleanContainerStyles,
+  booleanKnobStyles,
+  btnStyles,
+  containerStyles,
+} from "./styles";
 
 interface SwitchButtonProps {
-  handleClick: (value: string) => void;
+  handleClick: (value: string | boolean) => void;
   values: string[];
+  defaultValue?: string | boolean;
+  type?: "text" | "boolean";
 }
 
-const containerStyles = () => {
-  return clsx(
-    "relative flex items-center justify-between w-full",
-    "border rounded-3xl",
-    "bg-gray-200",
-    "cursor-pointer"
+const Switch = ({ handleClick, defaultValue }: SwitchButtonProps) => {
+  const [active, setActive] = useState(defaultValue ?? false);
+
+  useEffect(() => {
+    if (defaultValue) {
+      setActive(defaultValue);
+    }
+  }, []);
+
+  const handleOptionClick = (value: string | boolean) => {
+    setActive(value);
+    handleClick(value);
+  };
+
+  return (
+    <div
+      className={booleanContainerStyles(active as boolean)}
+      onClick={() => handleOptionClick(!active)}
+    >
+      <div className={booleanKnobStyles(active as boolean)} />
+    </div>
   );
 };
 
-const btnStyles = () => {
-  return clsx(
-    "z-10 flex-1 text-center rounded-3xl px-4 py-2",
-    "transition-colors duration-200"
-  );
-};
+const SwitchTextButtons = ({
+  handleClick,
+  values,
+  defaultValue,
+}: SwitchButtonProps) => {
+  const [active, setActive] = useState(defaultValue ?? values[0]);
 
-const activeOptionStyles = (active: boolean) => {
-  return clsx(
-    "absolute top-0 left-0 h-full w-1/2 rounded-3xl bg-black transition-transform duration-300"
-  );
-};
-
-export const SwitchButton = ({ handleClick, values }: SwitchButtonProps) => {
-  const [active, setActive] = useState(values[0]);
-
-  const handleOptionClick = (value: string) => {
+  const handleOptionClick = (value: string | boolean) => {
     setActive(value);
     handleClick(value);
   };
@@ -40,7 +55,7 @@ export const SwitchButton = ({ handleClick, values }: SwitchButtonProps) => {
   return (
     <div className={containerStyles()}>
       <div
-        className={activeOptionStyles(active === values[0])}
+        className={activeOptionStyles()}
         style={{
           transform: `translateX(${active === values[0] ? "0%" : "100%"})`,
         }}
@@ -48,6 +63,7 @@ export const SwitchButton = ({ handleClick, values }: SwitchButtonProps) => {
       {values.map((value) => (
         <button
           key={value}
+          type="button"
           className={clsx(
             btnStyles(),
             active === value ? "text-white" : "text-black"
@@ -58,5 +74,18 @@ export const SwitchButton = ({ handleClick, values }: SwitchButtonProps) => {
         </button>
       ))}
     </div>
+  );
+};
+
+export const SwitchButton = ({
+  handleClick,
+  values,
+  defaultValue,
+  type = "text",
+}: SwitchButtonProps) => {
+  const UI = type === "boolean" ? Switch : SwitchTextButtons;
+
+  return (
+    <UI handleClick={handleClick} values={values} defaultValue={defaultValue} />
   );
 };

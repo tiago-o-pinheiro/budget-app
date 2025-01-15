@@ -1,7 +1,7 @@
-import { useCurrencyFormatter } from "@hooks";
+import { useAccountProvider, useCurrencyFormatter } from "@hooks";
 import { Container, Text, Title, Avatar, Badge, ListSelect } from "@components";
 import clsx from "clsx";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
 import { MONTH_LIST } from "@constants";
 import { TransactionItemProps } from "./transaction.interface";
@@ -65,10 +65,15 @@ export const Transactions = ({
 }) => {
   const thisMonth = new Date().getMonth() + 1;
   const [selectedMonth, setSelectedMonth] = useState(thisMonth);
-  const hasTransactions = movements?.length > 0;
+  const { getAccountMovement } = useAccountProvider();
+  const { accountId } = useParams();
+
+  const accountMovements = getAccountMovement(parseInt(accountId ?? ""));
+  const transactions = accountMovements ?? movements;
+  const hasTransactions = transactions?.length > 0;
 
   const filteredMovements = filterMovementsBySelectedMonth(
-    movements,
+    transactions,
     selectedMonth
   )?.sort(sortMovementsByDate);
 

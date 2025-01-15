@@ -4,25 +4,29 @@ import {
   ConfirmDialog,
   Container,
   Input,
-  PageHeader,
+  Select,
+  SwitchButton,
+  Text,
 } from "@components";
-import {
-  CurrencyEuroIcon,
-  PencilSquareIcon,
-  WalletIcon,
-} from "@heroicons/react/20/solid";
+
 import { useAccountProvider } from "@hooks";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { Account } from "@interfaces";
 import {
+  AdjustmentsHorizontalIcon,
   BuildingLibraryIcon,
   GlobeEuropeAfricaIcon,
   HeartIcon,
+  QueueListIcon,
   TrashIcon,
   UserCircleIcon,
+  CurrencyEuroIcon,
+  PencilSquareIcon,
+  WalletIcon,
 } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
+import { AccountType } from "src/config/interfaces/account.interface";
 
 interface AccountFormProps {
   name: string;
@@ -31,10 +35,36 @@ interface AccountFormProps {
   description?: string;
   iban?: string;
   swift?: string;
+  isMain: boolean;
+  type: AccountType;
 }
+
+const ACCOUNT_TYPES = [
+  {
+    id: 1,
+    name: "Checking",
+    value: "checking",
+  },
+  {
+    id: 2,
+    name: "Savings",
+    value: "savings",
+  },
+  {
+    id: 3,
+    name: "Credit",
+    value: "credit",
+  },
+  {
+    id: 4,
+    name: "Investment",
+    value: "investment",
+  },
+];
 
 export const EditAccount = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isMain, setIsMain] = useState<boolean>(false);
   const { accountId } = useParams();
   const { getAccount, editAccount, removeAccount } = useAccountProvider();
   const account = getAccount(Number(accountId));
@@ -46,8 +76,7 @@ export const EditAccount = () => {
   const { formState } = methods;
 
   const onSubmit = (data: Omit<Account, "movements" | "id">) => {
-    editAccount(Number(accountId), data);
-    navigate("/accounts");
+    editAccount(Number(accountId), { ...data, isMain });
   };
 
   const handleRemoveAccount = () => {
@@ -61,11 +90,33 @@ export const EditAccount = () => {
     }
   }, [account]);
 
+  useEffect(() => {
+    if (account?.isMain) {
+      setIsMain(account.isMain);
+    }
+  }, []);
+
   return (
-    <FormProvider {...methods}>
-      <Container>
-        <PageHeader title={account?.name ?? "Account"} to="/accounts" />
+    <Container styles="pb-16">
+      <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
+          <div className="flex items-center justify-between bg-gray-200 rounded-3xl p-4 mb-2">
+            <div className="flex items-center gap-2 ml-2">
+              <AdjustmentsHorizontalIcon className="h-5 w-5 text-gray-500" />
+              <Text
+                value="Set as main account"
+                color="secondary"
+                styles="text-gray-500/70"
+              />
+            </div>
+            <SwitchButton
+              values={["active", "inactive"]}
+              defaultValue={account?.isMain ?? isMain}
+              handleClick={(value) => setIsMain(value as boolean)}
+              type="boolean"
+            />
+          </div>
+
           <Input
             type="text"
             name="name"
@@ -75,6 +126,10 @@ export const EditAccount = () => {
           >
             <WalletIcon className="h-5 w-5 text-gray-500" />
           </Input>
+
+          <Select data={ACCOUNT_TYPES} label="Account type" name="type">
+            <QueueListIcon className="h-5 w-5 text-gray-500" />
+          </Select>
 
           <Input type="text" name="owner" label="Account Owner">
             <UserCircleIcon className="h-5 w-5 text-gray-500" />
@@ -123,7 +178,7 @@ export const EditAccount = () => {
             text="Are you sure you want to delete this account?"
           />
         )}
-      </Container>
-    </FormProvider>
+      </FormProvider>
+    </Container>
   );
 };

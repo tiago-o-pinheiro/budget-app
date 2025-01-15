@@ -1,5 +1,5 @@
 import { useForm, FormProvider, DefaultValues } from "react-hook-form";
-import { Button, Input, Modal } from "@components";
+import { Button, Input, Modal, Select } from "@components";
 import {
   CurrencyEuroIcon,
   PencilSquareIcon,
@@ -10,6 +10,8 @@ import {
 import { useCheckModalStatus, useModalProvider } from "@hooks";
 import { useAccountStore } from "@stores";
 import { useNavigate } from "react-router-dom";
+import { QueueListIcon } from "@heroicons/react/24/outline";
+import { AccountType } from "src/config/interfaces/account.interface";
 
 interface AccountFormsProviderProps<T> {
   defaultValues?: DefaultValues<T>;
@@ -18,8 +20,32 @@ interface AccountFormsProviderProps<T> {
 interface AccountFormProps {
   name: string;
   balance: number | null;
+  type: AccountType;
   description: string;
 }
+
+const ACCOUNT_TYPES = [
+  {
+    id: 1,
+    name: "Checking",
+    value: "checking",
+  },
+  {
+    id: 2,
+    name: "Savings",
+    value: "savings",
+  },
+  {
+    id: 3,
+    name: "Credit",
+    value: "credit",
+  },
+  {
+    id: 4,
+    name: "Investment",
+    value: "investment",
+  },
+];
 
 export const AccountForm = ({
   defaultValues,
@@ -73,6 +99,10 @@ export const AccountForm = ({
           >
             <CurrencyEuroIcon className="h-5 w-5 text-gray-500" />
           </Input>
+
+          <Select data={ACCOUNT_TYPES} label="Account type" name="type">
+            <QueueListIcon className="h-5 w-5 text-gray-500" />
+          </Select>
 
           <Input type="text" name="description" label="Description">
             <PencilSquareIcon className="h-5 w-5 text-gray-500" />

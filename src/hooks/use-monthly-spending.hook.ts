@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { Movement } from "@interfaces";
 import { useGetYearAndMonth } from "./use-get-year-and-month.hooks";
+import { parseFloatNumber } from "@config";
 
 const getDaysInMonth = (year: number, month: number) => {
   return new Date(year, month, 0).getDate();
@@ -43,9 +44,9 @@ export const useMonthlySpending = (
     const weeklyAmount = totalSpent / weeksPassed;
 
     return [
-      { label: "day", amount: parseFloat(dailyAmount.toFixed(2)) },
-      { label: "week", amount: parseFloat(weeklyAmount.toFixed(2)) },
-      { label: "month", amount: parseFloat(totalSpent.toFixed(2)) },
+      { label: "day", amount: parseFloatNumber(dailyAmount) },
+      { label: "week", amount: parseFloatNumber(weeklyAmount) },
+      { label: "month", amount: parseFloatNumber(totalSpent) },
     ];
   }, [movements, targetMonth, year, currentMonth]);
 
