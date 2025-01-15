@@ -13,7 +13,22 @@ export const Budgets = () => {
   const account = getAccount(Number(accountId)) as Account;
 
   if (!account?.budgets) {
-    return null;
+    return (
+      <Container styles="flex flex-col justify-center items-center h-40 gap-8">
+        <Text value="No budgets found" size="md" color="secondary" />
+        <Button
+          title="Add Budget"
+          family="primary"
+          onClick={() => setOpenModal(true)}
+        />
+        {openModal ? (
+          <ManageBudget
+            accountId={account.id}
+            close={() => setOpenModal(false)}
+          />
+        ) : null}
+      </Container>
+    );
   }
 
   return (
