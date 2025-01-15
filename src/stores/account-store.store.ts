@@ -1,4 +1,6 @@
-import { AccountsStore } from "@interfaces";
+import { parseFloatNumber } from "@config";
+import { AccountsStore, Budget } from "@interfaces";
+
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -14,6 +16,9 @@ const initialState: AccountsStore = {
   editAccount: () => {},
   addMovement: () => {},
   removeMovement: () => {},
+  addBudget: () => {},
+  removeBudget: () => {},
+  editBudget: () => {},
 };
 
 export const useAccountStore = create<AccountsStore>()(
@@ -51,7 +56,7 @@ export const useAccountStore = create<AccountsStore>()(
             return {
               ...account,
               movements: updatedMovements,
-              balance: updatedBalance,
+              balance: parseFloatNumber(updatedBalance),
             };
           }),
         })),
@@ -74,7 +79,7 @@ export const useAccountStore = create<AccountsStore>()(
             return {
               ...account,
               movements: updatedMovements,
-              balance: updatedBalance,
+              balance: parseFloatNumber(updatedBalance),
             };
           }),
         })),
@@ -100,6 +105,62 @@ export const useAccountStore = create<AccountsStore>()(
       getTotalBalance: () => {
         const { accounts } = get();
         return accounts.reduce((total, account) => total + account.balance, 0);
+      },
+
+      addBudget: (accountId: number, budget: Omit<Budget, "id">) => {
+        set((state) => ({
+          accounts: state.accounts.map((account) => {
+            if (account.id !== accountId) return account;
+
+            const budgets = account.budgets || [];
+            const newId = generateId(budgets);
+
+            const updatedBudgets = [...budgets, { ...budget, id: newId }];
+
+            return {
+              ...account,
+              budgets: updatedBudgets,
+            };
+          }),
+        }));
+      },
+
+      removeBudget: (accountId: number, budgetId: number) => {
+        set((state) => ({
+          accounts: state.accounts.map((account) => {
+            if (account.id !== accountId) return account;
+
+            const budgets = account.budgets || [];
+            const updatedBudgets = budgets.filter((b) => b.id !== budgetId);
+
+            return {
+              ...account,
+              budgets: updatedBudgets,
+            };
+          }),
+        }));
+      },
+
+      editBudget: (
+        accountId: number,
+        budgetId: number,
+        updatedBudget: Partial<Budget>
+      ) => {
+        set((state) => ({
+          accounts: state.accounts.map((account) => {
+            if (account.id !== accountId) return account;
+
+            const budgets = account.budgets || [];
+            const updatedBudgets = budgets.map((b) =>
+              b.id === budgetId ? { ...b, ...updatedBudget } : b
+            );
+
+            return {
+              ...account,
+              budgets: updatedBudgets,
+            };
+          }),
+        }));
       },
     }),
     { name: "accounts" }

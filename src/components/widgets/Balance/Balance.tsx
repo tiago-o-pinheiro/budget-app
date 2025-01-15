@@ -9,7 +9,7 @@ export const Balance = ({ balance }: BalanceProps) => {
   const formattedBalance = useCurrencyFormatter({ value: balance });
 
   return (
-    <div className="w-full p-4">
+    <div className="w-full pb-4">
       <Text
         value={formattedBalance}
         size="xl"
