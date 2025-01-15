@@ -1,5 +1,12 @@
 import { useForm, FormProvider } from "react-hook-form";
-import { Button, ConfirmDialog, Container, Input } from "@components";
+import {
+  Button,
+  ConfirmDialog,
+  Container,
+  Input,
+  SwitchButton,
+  Text,
+} from "@components";
 import {
   CurrencyEuroIcon,
   PencilSquareIcon,
@@ -25,10 +32,12 @@ interface AccountFormProps {
   description?: string;
   iban?: string;
   swift?: string;
+  isMain: boolean;
 }
 
 export const EditAccount = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isMain, setIsMain] = useState<boolean>(false);
   const { accountId } = useParams();
   const { getAccount, editAccount, removeAccount } = useAccountProvider();
   const account = getAccount(Number(accountId));
@@ -40,7 +49,7 @@ export const EditAccount = () => {
   const { formState } = methods;
 
   const onSubmit = (data: Omit<Account, "movements" | "id">) => {
-    editAccount(Number(accountId), data);
+    editAccount(Number(accountId), { ...data, isMain });
   };
 
   const handleRemoveAccount = () => {
@@ -54,10 +63,30 @@ export const EditAccount = () => {
     }
   }, [account]);
 
+  useEffect(() => {
+    if (account?.isMain) {
+      setIsMain(account.isMain);
+    }
+  }, []);
+
   return (
     <FormProvider {...methods}>
       <Container>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
+          <div className="flex items-center justify-between bg-gray-200 rounded-3xl p-4 mb-2">
+            <Text
+              value="Set as main account"
+              color="secondary"
+              styles="text-gray-500/70"
+            />
+            <SwitchButton
+              values={["active", "inactive"]}
+              defaultValue={account?.isMain ?? isMain}
+              handleClick={(value) => setIsMain(value as boolean)}
+              type="boolean"
+            />
+          </div>
+
           <Input
             type="text"
             name="name"

@@ -11,4 +11,6 @@ export interface Account {
   swift?: string;
   movements?: Movement[];
   budgets?: Budget[];
+  type?: "checking" | "savings" | "credit" | "investment";
+  isMain?: boolean;
 }
