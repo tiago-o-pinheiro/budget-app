@@ -1,6 +1,8 @@
 import { Budget } from "./budget.interface";
 import { Movement } from "./movement.interface";
 
+export type AccountType = "checking" | "savings" | "credit" | "investment";
+
 export interface Account {
   id: number;
   name: string;
@@ -11,6 +13,6 @@ export interface Account {
   swift?: string;
   movements?: Movement[];
   budgets?: Budget[];
-  type?: "checking" | "savings" | "credit" | "investment";
+  type?: AccountType;
   isMain?: boolean;
 }
