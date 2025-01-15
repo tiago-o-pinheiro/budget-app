@@ -17,7 +17,7 @@ import { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { EditAccount } from "./components/EditAccount";
 import { AccountDetails } from "./components/AccountDetails";
-import { Budgets } from "./components/Budgets";
+import { Budgets } from "./components/Budgets/Budgets";
 
 const AccountCard = ({ account }: { account: Account }) => {
   const formattedBalance = useCurrencyFormatter({ value: account.balance });
