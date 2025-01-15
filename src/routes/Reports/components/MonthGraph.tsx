@@ -27,7 +27,7 @@ export const MonthGraph = ({
         <div className="flex gap-1 w-full items-end justify-between px-3">
           {totalByDay.map((day) => {
             return (
-              <div key={day.day} className="flex flex-col items-center">
+              <div key={day.day} className="flex flex-col items-center gap-1">
                 <Text
                   value={`${day.total.toFixed(2)}€`}
                   size="xs"
