@@ -16,3 +16,7 @@ export { CurrencyNumber } from "./CurrencyNumber/CurrencyNumber";
 export { PadNumber } from "./PadNumber/PadNumber";
 export { SwitchButton } from "./SwitchButton/SwitchButton";
 export { PercentageBar } from "./PercentageBar/PercentageBar";
+export { Section } from "./Section/Section";
+export { Separator } from "./Separator/Separator";
+export { Icon } from "./Icon/Icon";
+export { Alert } from "./Alert/Alert";

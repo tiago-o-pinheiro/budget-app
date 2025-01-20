@@ -1,17 +1,8 @@
 import { BellIcon, Cog6ToothIcon } from "@heroicons/react/20/solid";
 import clsx from "clsx";
 import { useAccountProvider, useCurrencyFormatter } from "@hooks";
-import { Text, Title } from "../Typo/Typo";
-
-const Avatar = () => {
-  return (
-    <img
-      src="https://avatars.githubusercontent.com/u/64702589?v=4"
-      alt="avatar"
-      className="w-10 h-10 rounded-full"
-    />
-  );
-};
+import { Text, Title, Avatar } from "@components";
+import { Link } from "react-router-dom";
 
 const iconStyles = () => {
   return clsx("w-5 h-5 text-gray-500");
@@ -23,7 +14,11 @@ const Profile = () => {
 
   return (
     <div className="flex items-center justify-center gap-2">
-      <Avatar />
+      <Avatar
+        image="https://avatars.githubusercontent.com/u/64702589?v=4"
+        value="Profile"
+        size="small"
+      />
       <div className="flex flex-col items-start gap-1">
         <Title value="Tiago Oliver" size="sm" />
         <Text
@@ -43,7 +38,9 @@ export const Header = () => {
         <Profile />
       </div>
       <div className="flex items-center justify-end p-2 gap-2 px-4">
-        <Cog6ToothIcon className={iconStyles()} />
+        <Link to="/settings">
+          <Cog6ToothIcon className={iconStyles()} />
+        </Link>
         <BellIcon className={iconStyles()} />
       </div>
     </header>
