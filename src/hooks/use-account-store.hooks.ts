@@ -8,6 +8,10 @@ export const useAccountProvider = () => {
     (state: AccountsStore) => state.editBudget
   );
 
+  const removeBudget = useAccountStore(
+    (state: AccountsStore) => state.removeBudget
+  );
+
   const createAccount = useAccountStore(
     (state: AccountsStore) => state.createAccount
   );
@@ -47,25 +51,16 @@ export const useAccountProvider = () => {
     }));
   };
 
-  const addNewBudget = (accountId: number, budget: Omit<Budget, "id">) => {
-    addBudget(accountId, budget);
-  };
-
-  const removeBudget = () => {
-    (state: AccountsStore) => state.removeBudget;
-  };
-
   const getBudget = (accountId: number, budgetId: number) => {
     const account = getAccount(accountId);
     return account?.budgets?.find((budget) => budget.id === budgetId);
   };
 
-  const editExistingBudget = (
-    accountId: number,
-    budgetId: number,
-    updatedBudget: Partial<Budget>
-  ) => {
-    editBudget(accountId, budgetId, updatedBudget);
+  const getAllBudgets = (): Budget[] => {
+    const totalAccounts = accounts.map((account) => account.budgets);
+    return totalAccounts
+      .flat()
+      .filter((budget): budget is Budget => budget?.status === "active");
   };
 
   const getAccountArray = (id?: number) => {
@@ -111,9 +106,10 @@ export const useAccountProvider = () => {
     getAccount,
     getAccountArray,
     getAccountMovement,
-    addBudget: addNewBudget,
+    addBudget,
     removeBudget,
-    editBudget: editExistingBudget,
+    editBudget,
     getBudget,
+    getAllBudgets,
   };
 };
