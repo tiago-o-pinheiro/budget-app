@@ -1,5 +1,5 @@
 import { parseFloatNumber } from "@config";
-import { AccountsStore, Budget } from "@interfaces";
+import { AccountsStore, Budget, Movement } from "@interfaces";
 
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
@@ -91,7 +91,7 @@ export const useAccountStore = create<AccountsStore>()(
           ),
         })),
 
-      getAllMovements: () => {
+      getAllMovements: (): Movement[] => {
         const { accounts } = get();
         return accounts.flatMap((account) =>
           (account.movements || []).map((movement) => ({
