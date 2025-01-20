@@ -2,6 +2,7 @@ import {
   Container,
   PageHeader,
   PercentageBar,
+  Separator,
   Text,
   Transaction,
 } from "@components";
@@ -85,7 +86,7 @@ export const Insights = () => {
     <Container>
       <PageHeader title="Insights" />
       <TotalBudget />
-      <div className="w-full h-1 border-b my-4" />
+      <Separator />
       <Container>
         <Text value="Budgets" size="lg" styles="pb-2" />
         {budgets.map((budget) => (
@@ -98,7 +99,7 @@ export const Insights = () => {
           </div>
         ))}
       </Container>
-      <div className="w-full h-1 border-b my-4" />
+      <Separator />
       <Container>
         <div className="py-2 mb-4 flex justify-between items-center w-full">
           <Text value="Expenses out of budget" size="lg" />
