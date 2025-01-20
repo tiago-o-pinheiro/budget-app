@@ -5,4 +5,5 @@ export interface Budget {
   amount: number;
   category: string;
   status: "active" | "inactive";
+  type: "expense" | "income";
 }
