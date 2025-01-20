@@ -12,3 +12,5 @@ export { useGetYearAndMonth } from "./use-get-year-and-month.hooks";
 export { usePercentage } from "./use-percentage.hooks";
 export { useTotalIncomes } from "./use-total-incomes.hooks";
 export { useMonthTotalBalance } from "./use-month-total-balance.hooks";
+export { useThemeEffect } from "./use-theme.hooks";
+export { useCategoryProvider } from "./use-category-store.hook";
