@@ -10,3 +10,5 @@ export { useMonthlySpending } from "./use-monthly-spending.hook";
 export { useTotalByDayReport } from "./use-total-by-day.hooks";
 export { useGetYearAndMonth } from "./use-get-year-and-month.hooks";
 export { usePercentage } from "./use-percentage.hooks";
+export { useTotalIncomes } from "./use-total-incomes.hooks";
+export { useMonthTotalBalance } from "./use-month-total-balance.hooks";
