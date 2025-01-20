@@ -18,11 +18,11 @@ export const ConfirmDialog = ({
     <Modal title={title}>
       <Text value={text} />
       <div className="flex justify-center gap-4 mt-4">
-        <Button onClick={confirmAction} title={"Yes"} family="danger">
-          <TrashIcon className="size-4 text-rose-500" />
-        </Button>
         <Button onClick={cancelAction} title={"No"}>
           <CheckIcon className="size-4 text-black" />
+        </Button>
+        <Button onClick={confirmAction} title={"Yes"} family="danger">
+          <TrashIcon className="size-4 text-rose-500" />
         </Button>
       </div>
     </Modal>
