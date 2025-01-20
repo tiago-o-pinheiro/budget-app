@@ -11,7 +11,7 @@ interface ModalProps {
 
 const Backdrop = () => {
   return (
-    <div className="fixed inset-0 h-full w-full bg-black bg-opacity-50 z-30 transition duration-200 ease-in data-[closed]:opacity-0"></div>
+    <div className="fixed inset-0 h-full w-full backdrop-blur-sm bg-white/30 bg-opacity-50 z-30 transition duration-200 ease-in data-[closed]:opacity-0"></div>
   );
 };
 
@@ -28,8 +28,8 @@ export const Modal = ({ children, title }: ModalProps) => {
       <Transition show={isShowing}>
         <div
           className={clsx(
-            "ease-in duration-200 transition duration-200 ease-in data-[closed]:opacity-0",
-            "fixed left-2 right-2  bg-white rounded-3xl shadow-lg p-4 z-40",
+            "ease-in duration-200 transition duration-200 ease-in data-[closed]:opacity-0 border border-gray-200",
+            "fixed left-2 right-2  bg-white rounded-3xl shadow-2xl p-4 z-40",
             "md:w-96 md:mx-auto md:left-1/2 md:top-1/2 md:right-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-3xl "
           )}
         >

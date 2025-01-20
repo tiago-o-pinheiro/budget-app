@@ -24,9 +24,11 @@ const activeOptionStyles = () => {
 
 const booleanContainerStyles = (active: boolean) => {
   return clsx(
-    "relative w-10 h-6 bg-gray-500 rounded-full flex-shrink-0",
+    "relative w-10 h-6 rounded-full flex-shrink-0",
     "cursor-pointer transition-colors duration-200",
-    !active ? "bg-gray-400" : "bg-gray-200"
+    active
+      ? "bg-gray-400 dark:bg-indigo-800 shadow-inner"
+      : "bg-gray-300 dark:bg-indigo-200"
   );
 };
 
