@@ -43,14 +43,7 @@ export const AccountDetails = () => {
   return (
     <Container>
       <PageHeader title={account.name} to="/accounts" />
-      <div className="flex flex-col justify-center items-center gap-4 w-full">
-        {account.type && !account.isMain ? (
-          <Badge value={account.type} size="xs" />
-        ) : null}
 
-        {account.isMain ? <Badge value={"Main account"} size="xs" /> : null}
-        <Balance balance={account.balance} />
-      </div>
       <Tabs />
       <div className="mt-4">
         <Outlet />

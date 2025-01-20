@@ -1,5 +1,7 @@
 import { useForm, FormProvider } from "react-hook-form";
 import {
+  Badge,
+  Balance,
   Button,
   ConfirmDialog,
   Container,
@@ -96,8 +98,20 @@ export const EditAccount = () => {
     }
   }, []);
 
+  if (!account) {
+    return <Container>Account not found</Container>;
+  }
+
   return (
     <Container styles="pb-16">
+      <div className="flex flex-col justify-center items-center gap-4 w-full">
+        {account.type && !account.isMain ? (
+          <Badge value={account.type} size="xs" />
+        ) : null}
+
+        {account.isMain ? <Badge value={"Main account"} size="xs" /> : null}
+        <Balance balance={account.balance} />
+      </div>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <div className="flex items-center justify-between bg-gray-200 rounded-3xl p-4 mb-2">

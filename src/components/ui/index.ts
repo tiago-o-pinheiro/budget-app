@@ -15,3 +15,4 @@ export { ListSelect } from "./ListSelect/ListSelect";
 export { CurrencyNumber } from "./CurrencyNumber/CurrencyNumber";
 export { PadNumber } from "./PadNumber/PadNumber";
 export { SwitchButton } from "./SwitchButton/SwitchButton";
+export { PercentageBar } from "./PercentageBar/PercentageBar";

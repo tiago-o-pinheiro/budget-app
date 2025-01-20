@@ -12,35 +12,15 @@ export const Budgets = () => {
   const { getAccount } = useAccountProvider();
   const account = getAccount(Number(accountId)) as Account;
 
-  if (!account?.budgets) {
-    return (
-      <Container styles="flex flex-col justify-center items-center h-40 gap-8">
-        <Text value="No budgets found" size="md" color="secondary" />
-        <Button
-          title="Add Budget"
-          family="primary"
-          onClick={() => setOpenModal(true)}
-        />
-        {openModal ? (
-          <ManageBudget
-            accountId={account.id}
-            close={() => setOpenModal(false)}
-          />
-        ) : null}
-      </Container>
-    );
-  }
-
   return (
     <Container clean styles="mb-12">
-      {account?.budgets.length > 0 ? (
+      {account?.budgets && account?.budgets.length > 0 ? (
         <div className="flex flex-col gap-4">
           {account.budgets.map((budget) => (
             <BudgetCard
               budget={budget}
               key={budget.id}
               movements={account.movements ?? []}
-              accountId={account.id}
             />
           ))}
           <div className="flex justify-end items-center">
@@ -61,12 +41,8 @@ export const Budgets = () => {
           />
         </div>
       )}
-
       {openModal ? (
-        <ManageBudget
-          accountId={account.id}
-          close={() => setOpenModal(false)}
-        />
+        <ManageBudget account={account} close={() => setOpenModal(false)} />
       ) : null}
     </Container>
   );

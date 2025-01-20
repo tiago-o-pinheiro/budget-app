@@ -23,13 +23,13 @@ export const Modal = ({ children, title }: ModalProps) => {
   }, []);
 
   return (
-    <div className="flex justify-center inset-0 items-center h-screen absolute z-40">
+    <div className="flex justify-center inset-0 items-center h-screen fixed z-40">
       <Backdrop />
       <Transition show={isShowing}>
         <div
           className={clsx(
             "ease-in duration-200 transition duration-200 ease-in data-[closed]:opacity-0",
-            "absolute left-2 right-2  bg-white rounded-3xl shadow-lg p-4 z-40",
+            "fixed left-2 right-2  bg-white rounded-3xl shadow-lg p-4 z-40",
             "md:w-96 md:mx-auto md:left-1/2 md:top-1/2 md:right-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-3xl "
           )}
         >
