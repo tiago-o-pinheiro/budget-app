@@ -8,4 +8,6 @@ export interface Movement {
   date: string;
   frequency?: Frequency | null | undefined;
   category: string;
+  account?: string;
+  accountId?: number;
 }

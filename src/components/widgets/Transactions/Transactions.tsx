@@ -4,10 +4,10 @@ import clsx from "clsx";
 import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
 import { MONTH_LIST } from "@constants";
-import { TransactionItemProps } from "./transaction.interface";
 import { filterMovementsBySelectedMonth, sortMovementsByDate } from "./utils";
+import { Movement } from "@interfaces";
 
-const Transaction = ({
+export const Transaction = ({
   name,
   value,
   account,
@@ -15,7 +15,7 @@ const Transaction = ({
   id,
   date,
   accountId,
-}: TransactionItemProps) => {
+}: Movement) => {
   const formattedValue = useCurrencyFormatter({ value });
 
   const formattedDate = new Intl.DateTimeFormat("en-US", {
@@ -33,7 +33,12 @@ const Transaction = ({
 
           <div className="flex-1 ml-4 flex flex-col">
             <Title value={name} size="xs" styles="text-base font-thin" />
-            <Text value={account} size="sm" color="secondary" styles="mb-2" />
+            <Text
+              value={account ?? ""}
+              size="sm"
+              color="secondary"
+              styles="mb-2"
+            />
             <Badge value={category} size="xs" />
           </div>
 
@@ -58,11 +63,7 @@ const Transaction = ({
   );
 };
 
-export const Transactions = ({
-  movements,
-}: {
-  movements: TransactionItemProps[];
-}) => {
+export const Transactions = ({ movements }: { movements: Movement[] }) => {
   const thisMonth = new Date().getMonth() + 1;
   const [selectedMonth, setSelectedMonth] = useState(thisMonth);
   const { getAccountMovement } = useAccountProvider();
