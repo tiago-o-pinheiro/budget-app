@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { BottomNav, Container, ModalProvider } from "@components";
-import { Accounts, Dashboard, Reports } from "@routes";
+import { Accounts, Categories, Dashboard, Reports, Settings } from "@routes";
 import { useThemeEffect } from "./hooks/use-theme.hooks";
 import { Insights } from "./routes/Insights/Ingishts";
 
@@ -15,6 +15,8 @@ export const App = () => {
           <Route path="/accounts/*" element={<Accounts />} />
           <Route path="/reports/*" element={<Reports />} />
           <Route path="/insights/*" element={<Insights />} />
+          <Route path="/settings/*" element={<Settings />} />
+          <Route path="/settings/categories" element={<Categories />} />
         </Routes>
       </Container>
       <BottomNav />
