@@ -56,6 +56,20 @@ const fieldStyles = () => {
   return clsx("flex flex-col w-full px-2");
 };
 
+export const InputWrapper = ({
+  styles,
+  children,
+}: {
+  children: React.ReactNode;
+  styles?: string;
+}) => {
+  return (
+    <Container styles={containerStyles(styles ?? "")}>
+      <div className={fieldStyles()}>{children}</div>
+    </Container>
+  );
+};
+
 export const Input = ({
   type,
   name,
