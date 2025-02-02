@@ -17,7 +17,7 @@ export const useCategoryStore = create<CategoryStore>()(
   persist(
     (set) => ({
       ...initialState,
-      addCategory: (category: Category) =>
+      addCategory: (category: Omit<Category, "id">) =>
         set((state) => {
           const lastId = generateId(state.categories);
           const newCategory = { ...category, id: lastId + 1 };
