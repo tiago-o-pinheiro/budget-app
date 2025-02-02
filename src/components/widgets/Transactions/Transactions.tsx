@@ -1,5 +1,9 @@
-import { useAccountProvider, useCurrencyFormatter } from "@hooks";
-import { Container, Text, Title, Avatar, Badge, ListSelect } from "@components";
+import {
+  useAccountProvider,
+  useCategoryProvider,
+  useCurrencyFormatter,
+} from "@hooks";
+import { Container, Text, Title, Badge, ListSelect, Icon } from "@components";
 import clsx from "clsx";
 import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
@@ -17,18 +21,24 @@ export const Transaction = ({
   accountId,
 }: Movement) => {
   const formattedValue = useCurrencyFormatter({ value });
+  const { getCategory } = useCategoryProvider();
 
   const formattedDate = new Intl.DateTimeFormat("en-US", {
     day: "2-digit",
     month: "short",
   }).format(new Date(date));
 
+  const categoryData = getCategory(category);
+
   return (
     <Container styles="rounded-xl p-2 bg-white mb-4">
       <Link to={`/movement?accountId=${accountId}&movementId=${id}`}>
         <div className="flex items-center justify-between">
-          <div className="w-12 h-12">
-            <Avatar value={name} />
+          <div
+            className="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full"
+            style={{ backgroundColor: categoryData?.color }}
+          >
+            <Icon name={categoryData?.icon ?? ""} size="md" />
           </div>
 
           <div className="flex-1 ml-4 flex flex-col">
@@ -39,7 +49,7 @@ export const Transaction = ({
               color="secondary"
               styles="mb-2"
             />
-            <Badge value={category} size="xs" />
+            <Badge value={categoryData?.name ?? ""} size="xs" />
           </div>
 
           <div className="text-right">
@@ -71,16 +81,17 @@ export const Transactions = ({ movements }: { movements: Movement[] }) => {
 
   const accountMovements = getAccountMovement(parseInt(accountId ?? ""));
   const transactions = accountMovements ?? movements;
-  const hasTransactions = transactions?.length > 0;
 
   const filteredMovements = filterMovementsBySelectedMonth(
     transactions,
     selectedMonth
   )?.sort(sortMovementsByDate);
 
+  const hasTransactions = filteredMovements?.length > 0;
+
   return (
     <Container
-      styles="mt-2 pb-2 pt-8 px-4 rounded-t-3xl bg-gray-100/50 flex flex-col  h-full"
+      styles="mt-2 pb-2 pt-8 px-4 rounded-3xl bg-gray-100/50 flex flex-col h-full"
       clean
     >
       <div className="flex justify-between items-center mb-4">
@@ -100,7 +111,9 @@ export const Transactions = ({ movements }: { movements: Movement[] }) => {
           <Transaction key={`${index}-${movement.id}`} {...movement} />
         ))
       ) : (
-        <Text value="No transactions" size="md" styles="text-center" />
+        <div className="flex flex-col items-center justify-center h-64">
+          <Text value="No transactions found" size="md" styles="text-center" />
+        </div>
       )}
     </Container>
   );
