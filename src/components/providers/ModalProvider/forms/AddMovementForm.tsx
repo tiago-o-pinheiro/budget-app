@@ -7,6 +7,7 @@ import {
 } from "@heroicons/react/20/solid";
 import {
   useAccountProvider,
+  useCategoryProvider,
   useCheckModalStatus,
   useGetCategories,
   useModalProvider,
@@ -34,7 +35,7 @@ interface AddMovementFormProps {
   value: number;
   name: string;
   date: string;
-  category: string;
+  category: number;
   description?: string;
   frequency?: Frequency | null;
 }
@@ -93,7 +94,7 @@ export const AddMovementForm = () => {
   const { close, modal } = useModalProvider();
   const { addMovement, getAccountArray } = useAccountProvider();
   const accounts = getAccountArray(modal.id);
-  const categories = useGetCategories();
+  const { categories } = useCategoryProvider();
 
   const navigate = useNavigate();
   const methods = useForm<AddMovementFormProps>({
@@ -101,7 +102,6 @@ export const AddMovementForm = () => {
       accountId: accounts[0]?.id ?? 0,
       name: "",
       date: new Date().toISOString().split("T")[0],
-      category: "",
       description: "",
       frequency: null,
     },
@@ -134,7 +134,7 @@ export const AddMovementForm = () => {
 
   return (
     <FormProvider {...methods}>
-      <Modal title="Add Movement">
+      <Modal title="Add Movement" close={handleClose}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <Select data={accountsArray} label="Account" name="accountId">
             <WalletIcon className="h-5 w-5 text-gray-500" />
