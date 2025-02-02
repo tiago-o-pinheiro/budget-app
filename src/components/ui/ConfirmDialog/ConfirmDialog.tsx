@@ -15,7 +15,7 @@ export const ConfirmDialog = ({
   text,
 }: ConfirmDialogProps) => {
   return (
-    <Modal title={title}>
+    <Modal title={title} close={cancelAction}>
       <Text value={text} />
       <div className="flex justify-center gap-4 mt-4">
         <Button onClick={cancelAction} title={"No"}>

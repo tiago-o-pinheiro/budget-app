@@ -1,5 +1,5 @@
 import { Transition } from "@headlessui/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import { Title } from "../Typo/Typo";
 
@@ -7,6 +7,7 @@ interface ModalProps {
   children: React.ReactNode;
   title?: string;
   isOpen?: Boolean;
+  close: () => void;
 }
 
 const Backdrop = () => {
@@ -15,18 +16,36 @@ const Backdrop = () => {
   );
 };
 
-export const Modal = ({ children, title }: ModalProps) => {
+export const Modal = ({ children, title, close }: ModalProps) => {
   const [isShowing, setIsShowing] = useState(false);
+  const modalRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     setTimeout(() => setIsShowing(true), 100);
   }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
+        close();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [close]);
 
   return (
     <div className="flex justify-center inset-0 items-center h-screen fixed z-40">
       <Backdrop />
       <Transition show={isShowing}>
         <div
+          ref={modalRef}
           className={clsx(
             "ease-in duration-200 transition duration-200 ease-in data-[closed]:opacity-0 border border-gray-200",
             "fixed left-2 right-2  bg-white rounded-3xl shadow-2xl p-4 z-40",
