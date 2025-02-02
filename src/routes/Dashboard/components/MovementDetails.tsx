@@ -1,15 +1,19 @@
 import {
-  Avatar,
   Badge,
   Button,
   ConfirmDialog,
   Container,
+  Icon,
   PageHeader,
   Text,
   Title,
 } from "@components";
 import { ChevronLeftIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { useAccountProvider, useCurrencyFormatter } from "@hooks";
+import {
+  useAccountProvider,
+  useCategoryProvider,
+  useCurrencyFormatter,
+} from "@hooks";
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
@@ -53,6 +57,7 @@ export const MovementDetails = () => {
   const account = getAccount(Number(accountId));
   const movement = account?.movements?.find((m) => m.id === Number(movementId));
   const navigate = useNavigate();
+  const { getCategory } = useCategoryProvider();
 
   const handleDelete = () => {
     if (!movement || !account?.name) return;
@@ -69,6 +74,7 @@ export const MovementDetails = () => {
     );
 
   const date = formatDate(movement.date);
+  const category = getCategory(movement.category);
 
   return (
     <Container>
@@ -76,9 +82,14 @@ export const MovementDetails = () => {
         <div className="self-start gap-4" onClick={() => navigate(-1)}>
           <ChevronLeftIcon className="size-5 text-black" />
         </div>
-        <Avatar value={movement.name} />
+        <div
+          className="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full"
+          style={{ backgroundColor: category?.color }}
+        >
+          <Icon name={category?.icon ?? ""} size="md" />
+        </div>
         <Title value={movement.name} size="lg" styles="" />
-        <Badge value={movement.category} />
+        <Badge value={category?.name ?? ""} />
       </div>
 
       <div className="flex justify-between items-center border-b-2 pb-4 mt-56">
@@ -107,10 +118,6 @@ export const MovementDetails = () => {
           <Badge value={movement.frequency} />
         </div>
       )}
-      <div className="flex justify-between items-center mt-4 border-b-2 pb-4">
-        <Text value={"Category:"} size="md" color="primary" />
-        <Badge value={movement.category} />
-      </div>
 
       {movement?.description && (
         <div className="flex justify-between items-start mt-4 pb-4 flex-col gap-2">
@@ -119,7 +126,7 @@ export const MovementDetails = () => {
         </div>
       )}
 
-      <div className="text-right mt-4">
+      <div className="flex justify-end items-center mt-4">
         <Button
           title="Delete"
           family="danger"
