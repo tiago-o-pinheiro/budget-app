@@ -9,7 +9,7 @@ export const App = () => {
   return (
     <div className="h-full">
       <ModalProvider />
-      <Container clean>
+      <Container clean styles="md:max-w-2xl lg:max-w-2xl xl:max-w-2xl mx-auto">
         <Routes>
           <Route path="/*" element={<Dashboard />} />
           <Route path="/accounts/*" element={<Accounts />} />
