@@ -8,6 +8,10 @@ export const useCategoryProvider = () => {
   const addCategory = useCategoryStore((state) => state.addCategory);
   const removeCategory = useCategoryStore((state) => state.removeCategory);
   const editCategory = useCategoryStore((state) => state.editCategory);
+  const getCategory = (id: number) => {
+    const parsedId = Number(id);
+    return categories.find((category) => category.id === parsedId);
+  };
 
-  return { categories, addCategory, removeCategory, editCategory };
+  return { categories, addCategory, removeCategory, editCategory, getCategory };
 };
