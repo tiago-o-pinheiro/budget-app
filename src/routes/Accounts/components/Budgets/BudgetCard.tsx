@@ -13,8 +13,10 @@ export const BudgetCard = ({
 }) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const { getAccount } = useAccountProvider();
-  const monthlyExpenses = useMovementReport(movements, "expenses");
-  const totalAcheived = Math.abs(monthlyExpenses[budget.category] || 0);
+  const monthlyExpenses = useMovementReport(movements);
+  const budgetTotal = monthlyExpenses.find(
+    (el) => el.categoryId === budget.category
+  );
   const account = getAccount(budget.accountId) as Account;
 
   return (
@@ -25,8 +27,9 @@ export const BudgetCard = ({
       >
         <PercentageBar
           total={budget.amount}
-          percentage={totalAcheived}
+          percentage={Math.abs(budgetTotal?.total ?? 0)}
           label={budget.name}
+          isActive={budget.status === "active"}
         />
       </div>
       {openModal && (

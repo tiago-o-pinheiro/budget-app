@@ -27,14 +27,13 @@ type Status = "active" | "inactive";
 interface BudgetFormProps extends Omit<Budget, "id" | "account.id"> {
   name: string;
   amount: number;
-  category: string;
+  category: number;
   status: Status;
   type: "expense" | "income";
 }
 
 const defaultValueBudget = {
   name: "",
-  category: "",
 };
 
 const useManageBudgetForm = (account: Account, budgetId?: number) => {
@@ -74,13 +73,21 @@ export const ManageBudget = ({
 
   const submitForm = (data: BudgetFormProps) => {
     const budgetStatus = status ? "active" : "inactive";
-    if (budget && budgetId) {
-      editBudget(account.id, budgetId, { ...data, status: budgetStatus });
+    const { category, ...rest } = data;
+    const categoryId = Number(category);
+
+    if (budgetId) {
+      editBudget(account.id, budgetId, {
+        ...rest,
+        status: budgetStatus,
+        category: categoryId,
+      });
       return handleClose();
     }
 
     addBudget(account.id, {
-      ...data,
+      ...rest,
+      category: categoryId,
       status: budgetStatus,
       accountId: account.id,
     });

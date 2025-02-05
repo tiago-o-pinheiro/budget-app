@@ -44,12 +44,10 @@ export const Reports = () => {
 
       <div className=" rounded-xl flex items-center flex-col justify-center gap-4">
         {selected === "expenses" && (
-          <>
-            <MonthGraph
-              movements={selectedMovements}
-              month={month ?? undefined}
-            />
-          </>
+          <MonthGraph
+            movements={selectedMovements}
+            month={month ?? undefined}
+          />
         )}
 
         {selected === "incomes" && hasMovements && (
