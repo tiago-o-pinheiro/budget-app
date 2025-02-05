@@ -18,7 +18,7 @@ const ThemeSetting = () => {
   return (
     <Section styles="flex gap-2 w-full items-center border-b justify-between">
       <div className="w-1/12">
-        <Icon name={theme === "dark" ? "moon" : "sun"} />
+        <Icon name={theme === "dark" ? "IoMoonOutline" : "IoSunnyOutline"} />
       </div>
       <div className="flex flex-col gap-1 w-10/12">
         <Text value="Dark mode" size="md" />
@@ -45,14 +45,14 @@ const CategorySetting = () => {
     <Link to="/settings/categories">
       <Section styles="flex gap-2 w-full items-center border-b justify-between">
         <div className="w-1/12">
-          <Icon name="queue-list" />
+          <Icon name="IoListOutline" />
         </div>
         <div className="flex flex-col gap-1 justify-items-start w-10/12 self-start">
           <Text value="Categories" size="md" />
           <Text value="Add or remove categories" size="xs" color="secondary" />
         </div>
         <div className="w-1/12 flex justify-end">
-          <Icon name="chevron-right" />
+          <Icon name="IoChevronForwardSharp" />
         </div>
       </Section>
     </Link>
@@ -63,14 +63,14 @@ const LanguageSetting = () => {
   return (
     <Section styles="flex gap-2 w-full items-center border-b justify-between">
       <div className="w-1/12">
-        <Icon name="language" />
+        <Icon name="IoLanguageOutline" />
       </div>
       <div className="flex flex-col gap-1 justify-items-start w-10/12 self-start">
         <Text value="Language" size="md" />
         <Text value="English" size="xs" color="secondary" />
       </div>
       <div className="w-1/12 flex justify-end">
-        <Icon name="chevron-right" />
+        <Icon name="IoChevronForwardSharp" />
       </div>
     </Section>
   );
@@ -80,7 +80,7 @@ const ProfileSetting = () => {
   return (
     <Section styles="flex gap-2 w-full items-center border-b justify-between">
       <div className="w-1/12">
-        <Icon name="user" />
+        <Icon name="IoPersonCircleOutline" />
       </div>
       <div className="flex flex-col gap-1 justify-items-start w-10/12 self-start">
         <Text value="Profile" size="md" />
@@ -91,7 +91,7 @@ const ProfileSetting = () => {
         />
       </div>
       <div className="w-1/12 flex justify-end">
-        <Icon name="chevron-right" />
+        <Icon name="IoChevronForwardSharp" />
       </div>
     </Section>
   );
