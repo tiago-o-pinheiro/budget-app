@@ -1,43 +1,54 @@
 import { Movement } from "@interfaces";
 import { useMemo } from "react";
+import { useCategoryProvider } from "./use-category-store.hook";
 
-const DEFAULT_EXCLUDED_CATEGORIES = ["Transfer", "Income: Salary"];
+interface CategoryTotal {
+  categoryName: string;
+  categoryId: number;
+  total: number;
+}
 
 export const useMovementReport = (
   movements: Omit<Movement, "account" | "accountId">[],
-  type?: "expenses" | "incomes",
-  month?: number
-): Record<string, number> => {
-  const excludedCategories =
-    type === "expenses"
-      ? [...DEFAULT_EXCLUDED_CATEGORIES, "Transfer"]
-      : DEFAULT_EXCLUDED_CATEGORIES;
-  const categoryTotals = useMemo(() => {
-    const totals: Record<string, number> = {};
+  month?: number,
+  type: "all" | "expenses" | "incomes" = "expenses"
+): CategoryTotal[] => {
+  const { getCategory } = useCategoryProvider();
 
-    const currentMonth = month ?? new Date().getMonth() + 1; // Default to the current month
+  const categoryTotals = useMemo(() => {
+    const totals: Record<number, CategoryTotal> = {};
+    const currentMonth = month ?? new Date().getMonth() + 1;
 
     movements.forEach((movement) => {
       const { category, value, date } = movement;
-
-      if (excludedCategories.includes(category)) {
-        return;
-      }
-
+      const categoryDetails = getCategory(Number(category));
       const movementDate = new Date(date);
-      if (movementDate.getMonth() + 1 !== currentMonth) {
+
+      if (movementDate.getMonth() + 1 !== currentMonth || !categoryDetails) {
         return;
       }
 
-      if (!totals[category]) {
-        totals[category] = 0;
+      const { id: categoryId, name: categoryName } = categoryDetails;
+
+      if (!totals[categoryId]) {
+        totals[categoryId] = {
+          categoryName,
+          categoryId,
+          total: 0,
+        };
       }
 
-      totals[category] += value;
+      if (type === "expenses") {
+        totals[categoryId].total += value < 0 ? value : 0;
+      } else if (type === "incomes") {
+        totals[categoryId].total += value > 0 ? value : 0;
+      } else {
+        totals[categoryId].total += value;
+      }
     });
 
-    return totals;
-  }, [movements, excludedCategories, month]);
+    return Object.values(totals);
+  }, [movements, month, type, getCategory]);
 
   return categoryTotals;
 };

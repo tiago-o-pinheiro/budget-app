@@ -17,7 +17,7 @@ import {
   TrashIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { useAccountProvider, useGetCategories } from "@hooks";
+import { useAccountProvider, useCategoryProvider } from "@hooks";
 import { Account, Budget } from "@interfaces";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -27,14 +27,13 @@ type Status = "active" | "inactive";
 interface BudgetFormProps extends Omit<Budget, "id" | "account.id"> {
   name: string;
   amount: number;
-  category: string;
+  category: number;
   status: Status;
   type: "expense" | "income";
 }
 
 const defaultValueBudget = {
   name: "",
-  category: "",
 };
 
 const useManageBudgetForm = (account: Account, budgetId?: number) => {
@@ -65,7 +64,7 @@ export const ManageBudget = ({
     useState<boolean>(false);
   const [status, setStatus] = useState<boolean>(true);
   const { addBudget, editBudget, removeBudget } = useAccountProvider();
-  const categories = useGetCategories();
+  const { categories } = useCategoryProvider();
 
   const { methods, formState, handleSubmit, budget } = useManageBudgetForm(
     account,
@@ -74,13 +73,21 @@ export const ManageBudget = ({
 
   const submitForm = (data: BudgetFormProps) => {
     const budgetStatus = status ? "active" : "inactive";
-    if (budget && budgetId) {
-      editBudget(account.id, budgetId, { ...data, status: budgetStatus });
+    const { category, ...rest } = data;
+    const categoryId = Number(category);
+
+    if (budgetId) {
+      editBudget(account.id, budgetId, {
+        ...rest,
+        status: budgetStatus,
+        category: categoryId,
+      });
       return handleClose();
     }
 
     addBudget(account.id, {
-      ...data,
+      ...rest,
+      category: categoryId,
       status: budgetStatus,
       accountId: account.id,
     });
@@ -98,10 +105,6 @@ export const ManageBudget = ({
     handleClose();
   };
 
-  if (!account.id) {
-    return <div>Account not found</div>;
-  }
-
   useEffect(() => {
     if (budget) {
       const status = budget.status === "active";
@@ -110,7 +113,7 @@ export const ManageBudget = ({
   }, []);
 
   return (
-    <Modal title={budget ? budget.name : "Add Budget"} isOpen={true}>
+    <Modal title={budget ? budget.name : "Add Budget"} close={handleClose}>
       {openConfirmationDialog ? (
         <ConfirmDialog
           title="Delete Budget"

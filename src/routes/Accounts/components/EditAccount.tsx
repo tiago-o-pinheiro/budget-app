@@ -1,4 +1,4 @@
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm, FormProvider, useWatch } from "react-hook-form";
 import {
   Badge,
   Balance,
@@ -75,11 +75,16 @@ export const EditAccount = () => {
   const methods = useForm<AccountFormProps>({
     defaultValues: account,
   });
-  const { formState } = methods;
+  const { formState, control, handleSubmit } = methods;
 
   const onSubmit = (data: Omit<Account, "movements" | "id">) => {
+    console.log("triggered");
     editAccount(Number(accountId), { ...data, isMain });
   };
+
+  const watchedFields = useWatch({
+    control,
+  });
 
   const handleRemoveAccount = () => {
     removeAccount(Number(accountId));
@@ -97,6 +102,16 @@ export const EditAccount = () => {
       setIsMain(account.isMain);
     }
   }, []);
+
+  useEffect(() => {
+    if (!account) return;
+
+    const timeoutId = setTimeout(() => {
+      handleSubmit(onSubmit)();
+    }, 500);
+
+    return () => clearTimeout(timeoutId);
+  }, [watchedFields, isMain]);
 
   if (!account) {
     return <Container>Account not found</Container>;
@@ -178,9 +193,6 @@ export const EditAccount = () => {
               onClick={() => setIsOpen(true)}
             >
               <TrashIcon className="h-5 w-5 text-rose-500" />
-            </Button>
-            <Button type="submit" title="Save" family="ghost">
-              <HeartIcon className="h-5 w-5 text-black" />
             </Button>
           </div>
         </form>

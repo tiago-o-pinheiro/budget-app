@@ -15,7 +15,7 @@ export const MonthOverview = ({
     return type === "expenses" ? movement.value < 0 : movement.value > 0;
   });
 
-  const data = useMovementReport(selectedMovements, type, month ?? undefined);
+  const data = useMovementReport(selectedMovements, month, "all");
 
   const hasData = Object.keys(data).length > 0;
   return (
@@ -30,8 +30,12 @@ export const MonthOverview = ({
           styles="text-center"
         />
       ) : (
-        Object.entries(data).map(([category, value]) => (
-          <CategoryItem key={category} category={category} value={value} />
+        data.map((item) => (
+          <CategoryItem
+            key={item.categoryId}
+            category={item.categoryName}
+            value={item.total}
+          />
         ))
       )}
     </Container>

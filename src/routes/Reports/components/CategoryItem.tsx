@@ -14,6 +14,7 @@ export const CategoryItem = ({
 }) => {
   const formattedValue = useCurrencyFormatter({ value });
   const isExpense = value < 0;
+  console.log(value);
   return (
     <Container
       styles="flex items-center justify-between mb-4 bg-white rounded-xl py-4 px-2"

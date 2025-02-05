@@ -1,4 +1,4 @@
-import { Badge, Balance, Container, PageHeader } from "@components";
+import { Container, PageHeader } from "@components";
 import { useAccountProvider } from "@hooks";
 import { useEffect } from "react";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
