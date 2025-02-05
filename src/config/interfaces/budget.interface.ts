@@ -3,7 +3,7 @@ export interface Budget {
   accountId: number;
   name: string;
   amount: number;
-  category: string;
+  category: number;
   status: "active" | "inactive";
   type: "expense" | "income";
 }
