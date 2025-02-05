@@ -20,3 +20,4 @@ export { Section } from "./Section/Section";
 export { Separator } from "./Separator/Separator";
 export { Icon } from "./Icon/Icon";
 export { Alert } from "./Alert/Alert";
+export { Image } from "./Image/Image";
