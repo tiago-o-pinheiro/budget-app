@@ -80,7 +80,7 @@ export const useAccountProvider = () => {
         name: `Internal transfer`,
         date: today,
         description: `Transfer to ${toAccount.name}`,
-        category: "Transfer between accounts",
+        category: 0,
       });
 
       addMovement(to, {
@@ -88,7 +88,7 @@ export const useAccountProvider = () => {
         name: `Internal transfer`,
         date: today,
         description: `Transfer from ${fromAccount.name}`,
-        category: "Transfer between accounts",
+        category: 0,
       });
     }
   };
