@@ -9,7 +9,6 @@ import {
   useAccountProvider,
   useCategoryProvider,
   useCheckModalStatus,
-  useGetCategories,
   useModalProvider,
 } from "@hooks";
 
