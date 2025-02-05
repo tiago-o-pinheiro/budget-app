@@ -1,7 +1,13 @@
 import { Category } from "@interfaces";
 
 export const CATEGORY_LIST: Category[] = [
-  { id: 1, name: "Alcohol/Bars", color: "#F97316", icon: "FaCocktail" },
+  {
+    id: 0,
+    name: "Transfer between accounts",
+    color: "#4189c4",
+    icon: "FaReceipt",
+  },
+  { id: 1, name: "Bars", color: "#F97316", icon: "FaCocktail" },
   { id: 2, name: "Clothing", color: "#EC4899", icon: "FaTshirt" },
   { id: 3, name: "Coffee/Snacks", color: "#A855F7", icon: "FaCoffee" },
   { id: 4, name: "Debts", color: "#EF4444", icon: "FaMoneyBillWave" },
