@@ -38,7 +38,7 @@ export const Transaction = ({
             className="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full"
             style={{ backgroundColor: categoryData?.color }}
           >
-            <Icon name={categoryData?.icon ?? ""} size="md" />
+            <Icon name={categoryData?.icon ?? ""} color="white" size="xs" />
           </div>
 
           <div className="flex-1 ml-4 flex flex-col">
