@@ -4,7 +4,6 @@ const containerStyles = () => {
   return clsx(
     "relative flex items-center justify-between w-full",
     "border rounded-3xl",
-    "bg-gray-200",
     "cursor-pointer"
   );
 };

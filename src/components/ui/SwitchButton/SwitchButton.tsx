@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { useEffect, useState } from "react";
-import { Text } from "@components";
+import { Container, Text } from "@components";
 import {
   activeOptionStyles,
   booleanContainerStyles,
@@ -31,11 +31,10 @@ const Switch = ({ handleClick, defaultValue }: SwitchButtonProps) => {
   };
 
   return (
-    <div
-      className={booleanContainerStyles(active as boolean)}
-      onClick={() => handleOptionClick(!active)}
-    >
-      <div className={booleanKnobStyles(active as boolean)} />
+    <div onClick={() => handleOptionClick(!active)}>
+      <Container styles={booleanContainerStyles(Boolean(active))} clean>
+        <div className={booleanKnobStyles(Boolean(active))} />
+      </Container>
     </div>
   );
 };
@@ -53,7 +52,7 @@ const SwitchTextButtons = ({
   };
 
   return (
-    <div className={containerStyles()}>
+    <Container styles={containerStyles()}>
       <div
         className={activeOptionStyles()}
         style={{
@@ -73,7 +72,7 @@ const SwitchTextButtons = ({
           <Text value={value} styles="capitalize" />
         </button>
       ))}
-    </div>
+    </Container>
   );
 };
 

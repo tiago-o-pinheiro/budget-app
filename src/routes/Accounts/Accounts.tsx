@@ -28,8 +28,8 @@ const AccountCard = ({ account }: { account: Account }) => {
   };
 
   return (
-    <div
-      className="w-full rounded-3xl mb-2 p-2 pl-4 pt-4  bg-gray-100"
+    <Container
+      styles="w-full rounded-3xl mb-4 px-8 pt-8 pb-4 border border-1 "
       key={account.id}
     >
       <Title value={account.name} size="lg" styles="mb-2" />
@@ -39,7 +39,7 @@ const AccountCard = ({ account }: { account: Account }) => {
       <div className="flex justify-end items-center">
         <Button title="Details" onClick={goTo} family="secondary" size="sm" />
       </div>
-    </div>
+    </Container>
   );
 };
 

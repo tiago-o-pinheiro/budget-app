@@ -2,10 +2,11 @@ import {
   AddMovement,
   Balance,
   Button,
+  Container,
   Header,
   Transactions,
 } from "@components";
-import { useAccountProvider } from "@hooks";
+import { useAccountProvider, useThemeEffect } from "@hooks";
 import { Movement } from "@interfaces";
 import { useEffect } from "react";
 import {
@@ -33,6 +34,8 @@ interface DashboardContentProps {
   accountId?: number;
 }
 const DashboardActions = ({ accountId }: DashboardContentProps) => {
+  const { theme } = useThemeEffect();
+  const textColor = theme === "light" ? "text-black" : "text-white";
   return (
     <div className="flex justify-around items-center">
       <div className="flex flex-col items-center">
@@ -41,14 +44,14 @@ const DashboardActions = ({ accountId }: DashboardContentProps) => {
       <div className="flex flex-col items-center">
         <Link to="/exchange">
           <Button title="Exchange">
-            <ArrowsRightLeftIcon className="size-4 text-black" />
+            <ArrowsRightLeftIcon className={`size-4 ${textColor}`} />
           </Button>
         </Link>
       </div>
       <div className="flex flex-col items-center">
         <Link to="/reports">
           <Button title="Reports">
-            <ChartBarSquareIcon className="size-4 text-black" />
+            <ChartBarSquareIcon className={`size-4 ${textColor}`} />
           </Button>
         </Link>
       </div>
@@ -72,14 +75,14 @@ const DashboardHeader = ({ balance, accountId }: DashboardHeaderProps) => {
   };
 
   return (
-    <div className="bg-white p-4 mt-14">
+    <Container styles={`p-4 mt-14`}>
       <Header />
       <AccountSelectorComponent handleSelectChange={handleSelectChange} />
       <div className="py-4">
         <Balance balance={balance} />
       </div>
       <DashboardActions accountId={accountId} />
-    </div>
+    </Container>
   );
 };
 

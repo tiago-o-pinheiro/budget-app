@@ -7,6 +7,9 @@ import {
 import { useFormContext } from "react-hook-form";
 import clsx from "clsx";
 
+import { Container } from "@components";
+import { useThemeEffect } from "@hooks";
+
 interface InputProps {
   type: "text" | "number" | "password" | "email" | "date" | "checkbox";
   name: string;
@@ -20,25 +23,18 @@ interface InputProps {
   props?: any;
 }
 
-interface ContainerProps {
-  children: React.ReactNode;
-  styles?: string;
-}
-
 const containerStyles = (styles: string) => {
   return clsx(
-    "p-3 bg-gray-300/50 flex flex-row-reverse rounded-3xl justify-center items-center mb-2",
+    "p-3 bg-gray-300/50 flex flex-row-reverse rounded-3xl justify-center items-center mb-2 border border-1",
     `${styles}`
   );
 };
 
-const Container = ({ children, styles }: ContainerProps) => {
-  const defaultStyles = containerStyles(styles || "");
-  return <div className={defaultStyles}>{children}</div>;
-};
-
 const inputStyles = () => {
-  return clsx("bg-transparent text-sm text-gray-600", "focus:outline-none");
+  const { theme } = useThemeEffect();
+  const textColor = theme === "light" ? "text-gray-600" : "text-gray-300";
+
+  return clsx("bg-transparent text-sm", "focus:outline-none", `${textColor}`);
 };
 
 const labelStyles = () => {
@@ -64,7 +60,7 @@ export const InputWrapper = ({
   styles?: string;
 }) => {
   return (
-    <Container styles={containerStyles(styles ?? "")}>
+    <Container styles={containerStyles(styles ?? "")} clean={true}>
       <div className={fieldStyles()}>{children}</div>
     </Container>
   );
@@ -84,7 +80,7 @@ export const Input = ({
   const { register } = useFormContext();
 
   return (
-    <Container>
+    <Container clean={true} styles={containerStyles("")}>
       <Field className={fieldStyles()}>
         <Label className={labelStyles()} htmlFor={name}>
           {label && label}

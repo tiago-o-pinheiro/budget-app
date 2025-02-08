@@ -1,6 +1,10 @@
 import { BellIcon, Cog6ToothIcon } from "@heroicons/react/20/solid";
 import clsx from "clsx";
-import { useAccountProvider, useCurrencyFormatter } from "@hooks";
+import {
+  useAccountProvider,
+  useCurrencyFormatter,
+  useThemeEffect,
+} from "@hooks";
 import { Text, Title, Avatar } from "@components";
 import { Link } from "react-router-dom";
 
@@ -32,8 +36,12 @@ const Profile = () => {
 };
 
 export const Header = () => {
+  const { theme } = useThemeEffect();
+  const bgColor = theme === "dark" ? "bg-gray-800" : "bg-white";
   return (
-    <header className="flex justify-between items-center bg-white  h-16 mb-2 fixed w-full top-0 left-0 right-0 z-20">
+    <header
+      className={`flex justify-between items-center h-16 mb-2 fixed w-full top-0 left-0 right-0 z-20 ${bgColor}`}
+    >
       <div className="flex items-center justify-start p-2 gap-2">
         <Profile />
       </div>

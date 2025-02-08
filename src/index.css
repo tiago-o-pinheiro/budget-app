@@ -8,5 +8,5 @@ html {
 }
 
 html.dark {
-  background-color: #1a202c;
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity, 1));
 }

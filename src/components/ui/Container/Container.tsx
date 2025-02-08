@@ -1,3 +1,4 @@
+import { useThemeEffect } from "@hooks";
 import clsx from "clsx";
 
 interface ContainerProps {
@@ -6,10 +7,16 @@ interface ContainerProps {
   clean?: boolean;
 }
 
-const containerStyles = (styles?: string, clean?: boolean) => {
-  return clsx(!clean ? "py-1 px-2" : "", `${styles}`);
+const containerStyles = (isDark: boolean, styles?: string, clean?: boolean) => {
+  const bgColor = isDark ? "bg-gray-900" : "bg-white";
+  return clsx(!clean ? "py-1 px-2" : "", `${styles}`, bgColor);
 };
 
 export const Container = ({ children, styles, clean }: ContainerProps) => {
-  return <div className={containerStyles(styles, clean)}>{children}</div>;
+  const { theme } = useThemeEffect();
+  const isDark = theme === "dark";
+
+  return (
+    <div className={containerStyles(isDark, styles, clean)}>{children}</div>
+  );
 };
