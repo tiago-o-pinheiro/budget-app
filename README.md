@@ -1,50 +1,57 @@
-# React + TypeScript + Vite
+# BudgetApp
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+BudgetApp is a simple and intuitive budget management application built using **React**, **Tailwind CSS**, **TypeScript**, and **Zustand** for state management. The application currently stores user information locally using **LocalStorage**, with plans to integrate a backend for storing user transactions in the future.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Multiple Accounts**: Users can create and manage one or more money accounts.
+- **Expense & Income Tracking**: Add expenses and income to keep track of financial movements.
+- **Automatic Calculations**: The app automatically calculates and displays how each account is being used.
+- **Budgeting System**: Users can set monthly budget targets to control expenses.
+- **Local Storage**: All user data is saved locally for quick access.
+- **Future Backend Integration**: Plans to introduce a backend to store user financial movements securely.
 
-## Expanding the ESLint configuration
+## Technologies Used
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **React** – Frontend framework for building a dynamic UI.
+- **TypeScript** – Ensures type safety and better developer experience.
+- **Tailwind CSS** – Provides a utility-first approach to styling.
+- **Zustand** – Lightweight state management.
+- **LocalStorage** – Used for persisting user data temporarily.
 
-- Configure the top-level `parserOptions` property like this:
+## Installation & Setup
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/yourusername/budget-app.git
+   cd budget-app
+   ```
+2. Install dependencies:
+   ```sh
+   npm install
+   # or
+   yarn install
+   ```
+3. Start the development server:
+   ```sh
+   npm run dev
+   # or
+   yarn dev
+   ```
+4. Open the application in your browser at `http://localhost:5173/`
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Future Plans
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+- Backend integration for secure data storage.
+- User authentication and profile management.
+- Data visualization with charts for better financial insights.
+- Mobile-friendly UI improvements.
+- React Native version app.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Contributing
+
+Feel free to fork the repository and submit pull requests with improvements or new features!
+
+---
+
+Made with ❤️ by Tiago Pinheiro
