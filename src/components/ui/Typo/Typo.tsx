@@ -28,19 +28,27 @@ type TextColor = "primary" | "secondary" | "white" | "black" | "red" | "green";
 
 interface TypoProps {
   type: "text" | "title";
-  value: string;
+  value?: string | number | null;
   size?: Sizes;
   color?: TextColor;
   styles?: string;
+  ellipsis?: boolean;
 }
 
 const TypoStypes = (
   type: string,
   size: string,
   color: string,
-  styles: string = ""
+  styles: string = "",
+  ellipsis: boolean = false
 ) => {
-  return clsx(type === "text" ? "font-sans" : "font-mono", size, color, styles);
+  return clsx(
+    type === "text" ? "font-sans" : "font-mono",
+    size,
+    color,
+    ellipsis ? "overflow-hidden text-ellipsis whitespace-nowrap" : "",
+    styles
+  );
 };
 
 const Typo = ({
@@ -49,10 +57,19 @@ const Typo = ({
   size = "md",
   color = "primary",
   styles,
+  ellipsis = false,
 }: TypoProps) => {
   const Component = TYPES[type] as React.ElementType;
 
-  const componentStyles = TypoStypes(type, SIZES[size], COLORS[color], styles);
+  if (!value) return null;
+
+  const componentStyles = TypoStypes(
+    type,
+    SIZES[size],
+    COLORS[color],
+    styles,
+    ellipsis
+  );
 
   return (
     <Component className={clsx(componentStyles, styles)}>{value}</Component>
@@ -64,7 +81,8 @@ export const Title = ({
   size = "md",
   color = "primary",
   styles,
-}: Omit<TypoProps, "type">) => {
+  ellipsis = false,
+}: Omit<TypoProps, "type"> & { ellipsis?: boolean }) => {
   return (
     <Typo
       type="title"
@@ -72,6 +90,7 @@ export const Title = ({
       size={size}
       color={color}
       styles={styles}
+      ellipsis={ellipsis}
     />
   );
 };
@@ -81,8 +100,16 @@ export const Text = ({
   size = "md",
   color = "primary",
   styles,
-}: Omit<TypoProps, "type">) => {
+  ellipsis = false,
+}: Omit<TypoProps, "type"> & { ellipsis?: boolean }) => {
   return (
-    <Typo type="text" value={value} size={size} color={color} styles={styles} />
+    <Typo
+      type="text"
+      value={value}
+      size={size}
+      color={color}
+      styles={styles}
+      ellipsis={ellipsis}
+    />
   );
 };
