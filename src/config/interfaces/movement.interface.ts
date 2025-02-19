@@ -1,13 +1,13 @@
 export type Frequency = "daily" | "weekly" | "monthly" | "yearly";
 
 export interface Movement {
-  id: number;
-  name: string;
-  description?: string;
-  value: number;
-  date: string;
-  frequency?: Frequency | null | undefined;
-  category: number;
   account?: string;
   accountId?: number;
+  category: number;
+  date: string;
+  description?: string;
+  frequency?: Frequency | null | undefined;
+  id: number;
+  name: string;
+  value: number;
 }
