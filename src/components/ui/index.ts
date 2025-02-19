@@ -1,6 +1,5 @@
 export { Button } from "./Button/Button";
 export { Header } from "./Header/Header";
-export { AddMovement } from "./AddMovement/AddMovement";
 export { AddAccount } from "./AddAccount/AddAccount";
 export { Select } from "./Select/Select";
 export { ConfirmDialog } from "./ConfirmDialog/ConfirmDialog";
@@ -21,3 +20,5 @@ export { Separator } from "./Separator/Separator";
 export { Icon } from "./Icon/Icon";
 export { Alert } from "./Alert/Alert";
 export { Image } from "./Image/Image";
+export { CategorySelect } from "./CategorySelect/CategorySelect";
+export { InputField } from "./Input/InputField";
