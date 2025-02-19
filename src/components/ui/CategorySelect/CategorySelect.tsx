@@ -1,11 +1,11 @@
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 import clsx from "clsx";
 import { useState, useEffect } from "react";
-import { Text } from "@components";
+import { Icon, Text } from "@components";
 
 const optionStyles = (isOpen: boolean, styles?: string) => {
   return clsx(
-    "absolute z-40 w-full shadow-lg overflow-hidden transition-all duration-200 ease-in-out ",
+    "absolute z-40 w-full shadow-lg transition-all duration-200 ease-in-out max-h-60 overflow-y-auto",
     "rounded-b-3xl",
     "bg-gray-200",
     isOpen ? "opacity-100" : "hidden opacity-0",
@@ -20,6 +20,7 @@ const selectedStyles = (isOpen: boolean, styles?: string) => {
     "border rounded-3xl border-gray-200",
     "bg-gray-200",
     "px-4 py-2 ",
+    "h-11",
     isOpen ? "border-b-0 rounded-b-none" : "",
     styles
   );
@@ -36,13 +37,19 @@ const containerStyles = (isOpen: boolean, styles?: string) => {
 
 const listSyles = () => {
   return clsx(
+    "flex items-center gap-2",
     "cursor-pointer min-h-10",
     "px-4 py-2",
     "hover:bg-blue-100 active:bg-blue-200 focus:outline-none focus-visible:bg-blue-100"
   );
 };
 
-type Option<T> = T & { id: number; name: string };
+type Category<T> = T & {
+  id: number;
+  name: string;
+  icon: string;
+  color: string;
+};
 type Styles = Record<
   "optionsStyles" | "selectedStyles" | "containerStyles",
   string
@@ -54,36 +61,24 @@ const STYLES = {
   containerStyles: "",
 };
 
-const Arrows = ({
-  isOpen,
-  isSingle,
-}: {
-  isOpen: boolean;
-  isSingle: boolean;
-}) => {
-  if (isSingle) return null;
-  if (!isOpen) {
-    return <ChevronDownIcon className="h-4 w-4 text-black" />;
-  }
-
-  return <ChevronUpIcon className="h-4 w-4 text-black" />;
-};
-
-export const ListSelect = <T extends Record<string, any>>({
-  options,
+export const CategorySelect = <T extends Record<string, any>>({
+  categories,
   onClick,
   defaultValue,
   styles = STYLES,
 }: {
-  options: Option<T>[];
+  categories: Category<T>[];
   onClick: (value: number) => void;
-  defaultValue?: Option<T>;
+  defaultValue?: Category<T>;
   styles?: Styles;
 }) => {
-  const [active, setActive] = useState<Option<T>>(defaultValue ?? options[0]);
+  const [active, setActive] = useState<Category<T>>(
+    defaultValue ?? categories[0]
+  );
+
   const [isOpen, setIsOpen] = useState(false);
 
-  const showOptionsList = options.length > 1;
+  const showOptionsList = categories.length > 1;
 
   const handleChange = () => {
     if (!showOptionsList) return;
@@ -98,39 +93,49 @@ export const ListSelect = <T extends Record<string, any>>({
 
   useEffect(() => {
     if (!showOptionsList) {
-      setActive(options[0]);
-      onClick(options[0].id);
+      setActive(categories[0]);
+      onClick(categories[0].id);
     }
-  }, [options]);
+  }, [categories]);
 
   return (
     <div className={containerStyles(isOpen, styles["containerStyles"])}>
       <div
         className={selectedStyles(isOpen, styles["selectedStyles"])}
         onClick={handleChange}
+        style={{ backgroundColor: active?.color, color: "white" }}
       >
+        <Icon name={active?.icon} />
         <Text
           value={active?.name}
           size="md"
-          styles="flex-1 text-center capitalize"
+          styles="flex-1 text-center"
+          color="white"
+          ellipsis
         />
-        <Arrows isOpen={isOpen} isSingle={!showOptionsList} />
+        {!isOpen ? (
+          <ChevronDownIcon className="h-4 w-4 text-white" />
+        ) : (
+          <ChevronUpIcon className="h-4 w-4 text-white" />
+        )}
       </div>
 
       <ul className={optionStyles(isOpen, styles["optionsStyles"])}>
-        {options
-          .filter((option) => option.id !== active?.id)
-          .map((option) => (
+        {categories
+          .filter((category) => category.id !== active?.id)
+          .map((category) => (
             <li
-              key={option.id}
+              key={category.id}
               onClick={() => {
-                setActive(option);
-                onClick(option.id);
+                setActive(category);
+                onClick(category.id);
                 setIsOpen(false);
               }}
               className={listSyles()}
+              style={{ backgroundColor: category.color, color: "white" }}
             >
-              <Text value={option.name} size="md" styles="capitalize" />
+              <Icon name={category?.icon} />
+              <Text value={category.name} size="md" color="white" ellipsis />
             </li>
           ))}
       </ul>

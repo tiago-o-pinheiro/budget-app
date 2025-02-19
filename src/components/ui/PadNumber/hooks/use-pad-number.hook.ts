@@ -30,9 +30,12 @@ export const usePadNumber = (
   };
 
   const handleBackspace = () => {
-    setInput((prev) =>
-      prev === "-" ? "0" : prev.length > 1 ? prev.slice(0, -1) : "0"
-    );
+    setInput((prev) => {
+      if (prev === "0") return prev;
+      if (prev === "-") return "0";
+      if (prev.length === 2 && prev.startsWith("-")) return "0";
+      return prev.length > 1 ? prev.slice(0, -1) : "0";
+    });
   };
 
   const handleClear = () => {
