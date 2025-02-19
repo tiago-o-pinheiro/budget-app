@@ -75,7 +75,19 @@ const NavItem = ({
   );
 };
 
+const ALLOWED_PATHS = ["/", "/accounts", "/insights"];
+
+const shouldRender = (pathname: string) => {
+  return ALLOWED_PATHS.includes(pathname);
+};
+
 export const BottomNav = () => {
+  const { pathname } = useLocation();
+  const showNav = shouldRender(pathname);
+
+  if (!showNav) {
+    return null;
+  }
   return (
     <div className="fixed bottom-1 left-0 right-0 z-10 w-auto">
       <div className="flex justify-center gap-2 p-2 w-fit mx-auto bg-white dark:bg-black shadow-xl dark:shadow-lg rounded-xl">
