@@ -54,6 +54,21 @@ const STYLES = {
   containerStyles: "",
 };
 
+const Arrows = ({
+  isOpen,
+  isSingle,
+}: {
+  isOpen: boolean;
+  isSingle: boolean;
+}) => {
+  if (isSingle) return null;
+  if (!isOpen) {
+    return <ChevronDownIcon className="h-4 w-4 text-black" />;
+  }
+
+  return <ChevronUpIcon className="h-4 w-4 text-black" />;
+};
+
 export const ListSelect = <T extends Record<string, any>>({
   options,
   onClick,
@@ -94,12 +109,12 @@ export const ListSelect = <T extends Record<string, any>>({
         className={selectedStyles(isOpen, styles["selectedStyles"])}
         onClick={handleChange}
       >
-        <Text value={active?.name} size="md" styles="flex-1 text-center" />
-        {!isOpen ? (
-          <ChevronDownIcon className="h-4 w-4 text-black" />
-        ) : (
-          <ChevronUpIcon className="h-4 w-4 text-black" />
-        )}
+        <Text
+          value={active?.name}
+          size="md"
+          styles="flex-1 text-center capitalize"
+        />
+        <Arrows isOpen={isOpen} isSingle={!showOptionsList} />
       </div>
 
       <ul className={optionStyles(isOpen, styles["optionsStyles"])}>
@@ -115,7 +130,7 @@ export const ListSelect = <T extends Record<string, any>>({
               }}
               className={listSyles()}
             >
-              <Text value={option.name} size="md" />
+              <Text value={option.name} size="md" styles="capitalize" />
             </li>
           ))}
       </ul>
