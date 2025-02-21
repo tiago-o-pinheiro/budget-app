@@ -69,25 +69,33 @@ export const useAccountProvider = () => {
     return [account];
   };
 
-  const transferMoney = (from: number, to: number, value: number) => {
+  const transferMoney = (
+    from: number,
+    to: number,
+    transfer: Record<string, string | number | boolean>
+  ) => {
     const fromAccount = getAccount(from);
     const toAccount = getAccount(to);
     const today = new Date().toISOString();
 
     if (fromAccount && toAccount) {
       addMovement(from, {
-        value: -value,
+        value: Number(-transfer.value),
         name: `Internal transfer`,
-        date: today,
-        description: `Transfer to ${toAccount.name}`,
+        date: transfer.date ? `${transfer.date}` : today,
+        description: transfer.description
+          ? `${transfer.description}`
+          : `Transfer to ${toAccount.name}`,
         category: 0,
       });
 
       addMovement(to, {
-        value,
+        value: Number(transfer.value),
         name: `Internal transfer`,
-        date: today,
-        description: `Transfer from ${fromAccount.name}`,
+        date: transfer.date ? `${transfer.date}` : today,
+        description: transfer.description
+          ? `${transfer.description}`
+          : `Transfer to ${toAccount.name}`,
         category: 0,
       });
     }
