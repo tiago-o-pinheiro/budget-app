@@ -13,3 +13,4 @@ export { useTotalIncomes } from "./use-total-incomes.hooks";
 export { useMonthTotalBalance } from "./use-month-total-balance.hooks";
 export { useThemeEffect } from "./use-theme.hooks";
 export { useCategoryProvider } from "./use-category-store.hook";
+export { useWindowSize } from "./use-window-size.hooks";
